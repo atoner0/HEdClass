@@ -5,9 +5,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login</title>
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css"/>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="myui.css" />
   </head>
   <body>
-    
+    <section class="landing">
+
+      <nav class="navbar">
+        <div class="container-fluid">
+          <a class="navbar-brand">Welcome to HedClass</a>
+        
+        </div>
+      </nav>
+
+      <div class="logincont container">
+        <form action="/" method="post">
+          <h2>Login</h2>
+
+          <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <div class="input-group">
+              <input
+                type="text"
+                name="userEmail"
+                class="form-control"
+                aria-describedby="basic-addon3 basic-addon4" 
+                required
+              />
+              <span class="input-group-text">@test.com</span>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" name = "password" class="form-control" required />
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+    </section>
   </body>
 </html>

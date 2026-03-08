@@ -1,4 +1,5 @@
 import express from "express";
+import session from "express-session";
 
 const app = express();
 const PORT = 4000;
@@ -11,6 +12,7 @@ import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+app.set("views", path.join(__dirname, "views"));
 
 //middleware
 app.use(express.static(path.join(__dirname, "/public")));
@@ -23,14 +25,17 @@ app.use(session({
 }));
 
 // LOGIN // 
-app.get("/login",  (req, res) => {
-  res.render("enter");
+app.get("/",  (req, res) => {
+  res.render("login");
 });
 
-app.post("/login", async (req, res) => {
-  const {userField} = req.body;
-  const userSQL = "SELECT * FROM users WHERE email = ?";
-  const [rows] = await db.promise().query(userSQL, [userField]);
+app.post("/", async (req, res) => {
+  const {userEmail, password} = req.body;
+
+  const fullEmail = userEmail + "@test.com";
+
+  const userSQL = "SELECT * FROM users WHERE email = ? AND passw = ?";
+  const [rows] = await db.promise().query(userSQL, [fullEmail, password]);
   if(rows.length > 0) {
     req.session.userData = rows[0];
 
@@ -41,6 +46,10 @@ app.post("/login", async (req, res) => {
     }
     //res.send(rows[0].role);
   }else{
-    res.redirect("/login");
+    res.redirect("/");
   }
+});
+
+app.listen(PORT, (err) => {
+  console.log(`listening on port http://localhost:${PORT}`);
 });

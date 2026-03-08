@@ -9,7 +9,7 @@
   "license": "ISC",
   "author": "",
   "type": "module",
-  "main": "app.js",
+  "main": "./src/web/app.js",
   "directories": {
     "doc": "docs"
   },

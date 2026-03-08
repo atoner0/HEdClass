@@ -1,0 +1,15 @@
+.navbar {
+    background-color: cadetblue;
+}
+
+.logincont{
+    padding-top: 5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logincont .btn {
+    background-color: darkcyan;
+    border: none;
+}
