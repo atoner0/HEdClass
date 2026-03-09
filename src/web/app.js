@@ -1,11 +1,12 @@
 import express from "express";
 import session from "express-session";
+import login from "./routes/login.js"
 
 const app = express();
 const PORT = 4000;
 app.set("view engine", "ejs");
 
-import db from "./config/db.js";
+
 
 import path from "path";
 import { fileURLToPath } from "url";
@@ -21,34 +22,12 @@ app.use(session({
   secret : "hedclass",
   resave : false,
   saveUninitialized : true,
-  cookie : { maxAge : 600000 }
+  cookie : { maxAge : 1000*60*60*1 }
 }));
 
 // LOGIN // 
-app.get("/",  (req, res) => {
-  res.render("login");
-});
+app.use("", login);
 
-app.post("/", async (req, res) => {
-  const {userEmail, password} = req.body;
-
-  const fullEmail = userEmail + "@test.com";
-
-  const userSQL = "SELECT * FROM users WHERE email = ? AND passw = ?";
-  const [rows] = await db.promise().query(userSQL, [fullEmail, password]);
-  if(rows.length > 0) {
-    req.session.userData = rows[0];
-
-    if(rows[0].role === "admin"){
-      res.redirect("/admin");
-    } else {
-      res.redirect("/officer");
-    }
-    //res.send(rows[0].role);
-  }else{
-    res.redirect("/");
-  }
-});
 
 app.listen(PORT, (err) => {
   console.log(`listening on port http://localhost:${PORT}`);

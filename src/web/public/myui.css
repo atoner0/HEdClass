@@ -2,6 +2,10 @@
     background-color: cadetblue;
 }
 
+.navbar .mynav {
+    justify-content: center;
+}
+
 .logincont{
     padding-top: 5%;
     display: flex;
