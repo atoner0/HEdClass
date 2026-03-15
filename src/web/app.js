@@ -1,12 +1,11 @@
 import express from "express";
 import session from "express-session";
-import login from "./routes/login.js"
+import loginRoutes from "./routes/loginRoutes.js"
+import adminRoutes from "./routes/adminRoutes.js"
 
 const app = express();
 const PORT = 4000;
 app.set("view engine", "ejs");
-
-
 
 import path from "path";
 import { fileURLToPath } from "url";
@@ -25,8 +24,9 @@ app.use(session({
   cookie : { maxAge : 1000*60*60*1 }
 }));
 
-// LOGIN // 
-app.use("", login);
+// ROUTES // 
+app.use("", loginRoutes);
+app.use("/admin", adminRoutes);
 
 
 app.listen(PORT, (err) => {
