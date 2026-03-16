@@ -1,7 +1,5 @@
 nav {
   background-color: cadetblue;
-  padding: 1rem;
-  border-radius: 0.75rem;
 }
 
 nav ul {
@@ -16,9 +14,6 @@ nav li {
   list-style: none;
 }
 
-.landing {
-  padding-top: 2rem;
-}
 
 .logincont {
   padding-top: 5%;
@@ -38,18 +33,3 @@ nav li {
   border: none;
 }
 
-.email-group {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.email-group input {
-  margin-bottom: 0;
-}
-
-.email-group small {
-  white-space: nowrap;
-  font-size: 0.95rem;
-  color: var(--pico-muted-color);
-}
