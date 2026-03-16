@@ -6,47 +6,51 @@
     <title>Login</title>
 
     <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
       rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
     />
 
     <link rel="stylesheet" href="myui.css" />
   </head>
   <body>
-    <section class="landing">
+    <main class="container">
+  <section class="landing">
+    <nav>
+      <ul>
+        <li><strong>Welcome to HedClass</strong></li>
+      </ul>
+    </nav>
 
-      <nav class="navbar">
-        <div class="mynav container-fluid">
-          <a class="navbar-brand"><h1>Welcome to HedClass</h1></a>
-        
-        </div>
-      </nav>
-
-      <div class="logincont container">
+    <div class="logincont">
+      <article>
         <form action="/" method="post">
           <h2>Login</h2>
 
-          <div class="mb-3">
-            <label for="email" class="form-label">Email</label>
-            <div class="input-group">
-              <input
-                type="text"
-                name="userEmail"
-                class="form-control"
-                aria-describedby="basic-addon3 basic-addon4" 
-                required
-              />
-              <span class="input-group-text">@test.com</span>
-            </div>
+          <label for="email">Email</label>
+          <div class="email-group">
+            <input
+              id="email"
+              type="text"
+              name="userEmail"
+              placeholder="Enter email"
+              required
+            />
+            <small>@test.com</small>
           </div>
 
-          <div class="mb-3">
-            <label for="password" class="form-label">Password</label>
-            <input type="password" name = "password" class="form-control" required />
-          </div>
-          <button type="submit" class="btn btn-primary">Submit</button>
+          <label for="password">Password</label>
+          <input
+            id="password"
+            type="password"
+            name="password"
+            required
+          />
+
+          <button type="submit">Submit</button>
         </form>
-      </div>
-    </section>
+      </article>
+    </div>
+  </section>
+</main>
   </body>
 </html>

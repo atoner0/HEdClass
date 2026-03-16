@@ -1,19 +1,55 @@
-.navbar {
-    background-color: cadetblue;
+nav {
+  background-color: cadetblue;
+  padding: 1rem;
+  border-radius: 0.75rem;
 }
 
-.navbar .mynav {
-    justify-content: center;
+nav ul {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
 }
 
-.logincont{
-    padding-top: 5%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+nav li {
+  list-style: none;
 }
 
-.logincont .btn {
-    background-color: darkcyan;
-    border: none;
+.landing {
+  padding-top: 2rem;
+}
+
+.logincont {
+  padding-top: 5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logincont article,
+.logincont form {
+  width: 100%;
+  max-width: 420px;
+}
+
+.logincont button {
+  background-color: darkcyan;
+  border: none;
+}
+
+.email-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.email-group input {
+  margin-bottom: 0;
+}
+
+.email-group small {
+  white-space: nowrap;
+  font-size: 0.95rem;
+  color: var(--pico-muted-color);
 }
