@@ -2,19 +2,13 @@ nav {
   background-color: cadetblue;
 }
 
-nav ul {
+/*----LOGIN----*/
+
+.login-title {
   width: 100%;
   display: flex;
   justify-content: center;
-  margin: 0;
-  padding: 0;
 }
-
-nav li {
-  list-style: none;
-}
-
-
 .logincont {
   padding-top: 5%;
   display: flex;
@@ -22,7 +16,6 @@ nav li {
   align-items: center;
 }
 
-.logincont article,
 .logincont form {
   width: 100%;
   max-width: 420px;
@@ -32,4 +25,47 @@ nav li {
   background-color: darkcyan;
   border: none;
 }
+
+.email-group {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.email-suffix {
+  padding-left: 5px;
+  padding-bottom: 20px;
+}
+
+/*-----ADMIN-----*/
+.admin-nav {
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+}
+
+.admin-title{
+  margin-right: 2%;
+}
+
+/* .admin-btns{
+
+  
+} */
+
+a.nav-btn {
+  background-color: #044e4e;
+  color: white;
+  text-decoration: none;
+  display: inline-block;
+  margin: 2%;
+  
+}
+
+a.nav-btn:hover {
+  background-color: #066868;
+}
+
+
+
 
