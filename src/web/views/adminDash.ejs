@@ -1,26 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard</title>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Admin Dashboard</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
+    />
 
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"/>
+    <link rel="stylesheet" href="myui.css" />
+  </head>
 
-  <link rel="stylesheet" href="myui.css"/>
-</head>
+  <body>
+    <main class="container-fluid">
+      <nav class="admin-nav">
+        <div class="left">
+          <ul class="admin-title">
+            <li><h3>Admin Dashboard</h3></li>
+          </ul>
+          <ul class="admin-btns">
+            <li><a href="/officers" class="nav-btn">Officers</a></li>
+            <li><a href="/programmes" class="nav-btn">Programmes</a></li>
+          </ul>
+        </div>
+        <div class="right">
+          <ul class="logout">
+            <li>Hello <%= user.username %> </li>
+            <li><a href="/logout" class="nav-btn">Log Out</a></li>
+          </ul>
+        </div>
+      </nav>
+      <div class="admin-content">
+        <div class="cards">
+          <% officers.forEach( (officer) => { %>
+         <article>
+          <h5>Officer Username:</h5> <p><%= officer.username  %></p>
+          <h5>Programmes Assigned:</h5> <p><%=officer.title %></p>
+         </article>
+        <% }) %>
+        </div>
+        <div class = "manage-btn">
+          <a href = "/officers" class = "manage"> Manage Officers </a>
+        </div>
 
-<body>
-  <nav class="admin-nav">
-    <ul class = "admin-title">
-      <li><h3>Admin Dashboard</h3></li>
-    </ul>
-    <ul class="admin-btns">
-      <li><a href="/officers" class="nav-btn">Officers</a></li>
-      <li><a href="/programmes" class="nav-btn">Programmes</a></li>
-    </ul>
-  </nav>
-</body>
-
+        <div class="cards">
+          <% programmes.forEach(programme => { %>
+            <article>
+              <h5>Programme:</h5> <p><%= programme.title  %></p>
+              <h5>Academic Year:</h5> <p><%=programme.academic_year %></p>
+            </article>
+          <% }) %>
+        </div>
+        <div class = "manage-btn">
+          <a href = "/programmes" class = "manage"> Manage Programmes </a>
+        </div>
+        
+      </div>
+    </main>
+  </body>
 </html>

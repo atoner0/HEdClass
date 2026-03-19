@@ -29,6 +29,7 @@ const checkLoginDetails = async (req,res) => {
 
     req.session.user = {
         id: user.id,
+        username: user.username,
         email: user.email,
         role: user.role
     };
@@ -44,7 +45,7 @@ const checkLoginDetails = async (req,res) => {
   return res.status(500).send("Server error");
 }};
 
-const logout = async () => {
+const logout = async (req, res) => {
     req.session.destroy();
     res.redirect("/");
 }; 
