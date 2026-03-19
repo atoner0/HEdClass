@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Officer Management</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
+    />
+
+    <link rel="stylesheet" href="/myui.css" />
+  </head>
+
+  <body>
+    <main class="container-fluid">
+      <nav class="admin-nav">
+        <div class="left">
+          <ul class="admin-title">
+            <li><h3>Officer Management</h3></li>
+          </ul>
+          <ul class="admin-btns">
+            <li><a href="/admin" class="nav-btn">Home</a></li>
+            <li><a href="/admin/officers" class="nav-btn">Officers</a></li>
+            <li><a href="/admin/programmes" class="nav-btn">Programmes</a></li>
+          </ul>
+        </div>
+        <div class="right">
+          <ul class="logout">
+            <li>Hello <%= user.username %></li>
+            <li><a href="/logout" class="nav-btn">Log Out</a></li>
+          </ul>
+        </div>
+      </nav>
+      <div class="admin-content">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Username</th>
+              <th scope="col">Email</th>
+              <th scope="col">Programmes</th>
+              <th scope="col"></th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% officers.forEach(officer => { %>
+            <tr>
+              <th scope="row"><%= officer.id %></th>
+              <td><%= officer.username %></td>
+              <td><%= officer.email %></td>
+              <td><%= officer.title %></td>
+              <td><a href="/admin/officers/<%= officer.id %>" class="table-btn">Edit</a></td>
+              <td><form action="/admin/officers/delete/<%= officer.id %>" method="POST">
+                        <button class="table-btn">Delete</button>
+              </form></td>
+            </tr>
+             <% }) %>
+          </tbody>
+        </table>
+       
+
+      </div>
+    </main>
+  </body>
+</html>

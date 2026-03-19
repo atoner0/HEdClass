@@ -1,7 +1,7 @@
 import db from "../config/db.js";
 
 const getOfficers = async () => {
-    const sql = `SELECT users.id, users.username, programmes.title
+    const sql = `SELECT users.id, users.username, users.email, programmes.title
                  FROM users
                  INNER JOIN officer_programmes
                  ON

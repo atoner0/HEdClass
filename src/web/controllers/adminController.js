@@ -14,4 +14,17 @@ const getAdminDash = async (req, res) => {
     res.render ("adminDash", {user, officers, programmes});
 };
 
-export default { getAdminDash };
+const getOfficers = async (req, res) => {
+
+    const user = req.session.user;
+
+    if(!user){
+        return res.redirect("/");
+    }
+
+    const officers = await adminModel.getOfficers();
+
+    res.render ("adminOfficers", {user, officers});
+};
+
+export default { getAdminDash, getOfficers };

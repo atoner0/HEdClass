@@ -116,10 +116,27 @@ a.manage {
   text-decoration: none;
   font-size: larger;
   padding: 10px 15px;
+  border-radius: 0.5rem;
 }
 
 a.manage:hover {
   background-color: #407872;
+}
+
+.table-btn {
+  background-color: #113934;
+  color: white;
+  text-decoration: none;
+  display: inline-block;
+  padding: 10px 15px;
+  margin-right: 10px;
+  border: none;
+  border-radius: 0.5rem;
+  
+}
+
+.table-btn:hover {
+  background-color: #30605b;
 }
 
 
