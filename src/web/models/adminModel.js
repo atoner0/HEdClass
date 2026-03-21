@@ -56,6 +56,21 @@ const getProgrammes = async () => {
 
 };
 
+const getOneProgramme = async (programmeId) => {
+
+    const sql = `SELECT * FROM programmes 
+                    WHERE id = ?`;
+
+    try {
+           const [rows] = await db.promise().query(sql, [programmeId]);
+           return rows;
+    } catch (error) {
+        console.error("Model error:", error);
+        throw error;
+    }
+
+};
+
 const updateOfficer = async (officerId, username, email,) => {
     const sql = `UPDATE users 
                 SET username = ?, email = ?
@@ -122,7 +137,21 @@ const deleteOfficerUser = async(officerId) => {
     }
 };
 
+const updateProgramme = async (title, code, award, year, programmeId) => {
+    const sql = `UPDATE programmes 
+                SET title = ?, code = ?, award_type = ?, academic_year = ?
+                WHERE id = ? `
 
-export default { getOfficers, getOneOfficer, getProgrammes, updateOfficer, resetProgrammes, updateOfficerProgrammes,
-                    addOfficer, deleteOfficerUser
+    try {
+           const [rows] = await db.promise().query(sql, [title, code, award, year, programmeId]);
+           return rows;
+    } catch (error) {
+        console.error("Model error:", error);
+        throw error;
+    }
+};
+
+
+export default { getOfficers, getOneOfficer, getProgrammes, getOneProgramme, updateOfficer, resetProgrammes, updateOfficerProgrammes,
+                    addOfficer, deleteOfficerUser, updateProgramme
  };

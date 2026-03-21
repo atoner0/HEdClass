@@ -9,5 +9,8 @@ router.post("/officer/edit", adminController.postAdminUpdateOfficer);
 router.get("/officer/add", adminController.getAddOfficer);
 router.post("/officer/add", adminController.postAddOfficer);
 router.post("/officer/delete/:id", adminController.adminDeleteOfficer);
+router.get("/programmes", adminController.getProgrammes);
+router.get("/programmes/:id", adminController.updateProgramme)
+router.post("/programme/edit", adminController.postUpdateProgramme);
 
 export default router;

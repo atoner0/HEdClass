@@ -104,7 +104,41 @@ const adminDeleteOfficer = async (req, res) => {
 
 };
 
+const getProgrammes = async (req, res) => {
+
+    const user = req.session.user;
+
+    if (!user) {
+        return res.redirect("/");
+    }
+
+    const programmes = await adminModel.getProgrammes();
+
+    res.render("adminProgrammes", { user, programmes });
+};
+
+const updateProgramme = async (req, res) => {
+    const user = req.session.user;
+    const programmeId = req.params.id;
+
+    const programmeData = await adminModel.getOneProgramme(programmeId);
+    const programme = programmeData[0];
+
+    res.render("editProgramme", { user, programme });
+};
+
+const postUpdateProgramme = async (req, res) => {
+    const fData = {...req.body};
+
+    const programmeId = Number(fData.id_field);
+
+    await adminModel.updateProgramme(fData.title_field, fData.code_field, fData.award_field, fData.year_field, programmeId);
+
+    res.redirect("/admin/programmes");
+}
+
 export default {
     getAdminDash, getOfficers, updateOfficer: adminUpdateOfficer, postAdminUpdateOfficer,
-    getAddOfficer, postAddOfficer, adminDeleteOfficer
+    getAddOfficer, postAddOfficer, adminDeleteOfficer, getProgrammes, updateProgramme,
+    postUpdateProgramme
 };
