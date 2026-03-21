@@ -21,7 +21,7 @@ app.use(session({
   secret : "hedclass",
   resave : false,
   saveUninitialized : true,
-  cookie : { maxAge : 1000*60*60*1 }
+  cookie : { maxAge : 1000*60*60 }
 }));
 
 // ROUTES // 

@@ -38,7 +38,10 @@
           <% officers.forEach( (officer) => { %>
          <article>
           <h5>Officer Username:</h5> <p><%= officer.username  %></p>
-          <h5>Programmes Assigned:</h5> <p><%=officer.title %></p>
+          <h5>Programmes Assigned:</h5> 
+          <% officer.programmes.split(',').forEach((programme) => { %>
+            <p><%= programme %></p>
+          <% }) %>
          </article>
         <% }) %>
         </div>

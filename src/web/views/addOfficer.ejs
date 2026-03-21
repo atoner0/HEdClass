@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Officer Management</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
+    />
+
+    <link rel="stylesheet" href="/myui.css" />
+  </head>
+
+  <body>
+    <main class="container-fluid">
+      <nav class="admin-nav">
+        <div class="left">
+          <ul class="admin-title">
+            <li><h3>Officer Management</h3></li>
+          </ul>
+          <ul class="admin-btns">
+            <li><a href="/admin" class="nav-btn">Home</a></li>
+            <li><a href="/admin/officers" class="nav-btn">Officers</a></li>
+            <li><a href="/admin/programmes" class="nav-btn">Programmes</a></li>
+          </ul>
+        </div>
+        <div class="right">
+          <ul class="logout">
+            <li>Hello <%= user.username %></li>
+            <li><a href="/logout" class="nav-btn">Log Out</a></li>
+          </ul>
+        </div>
+      </nav>
+      <div class="container">
+        <div class="form">
+      <form action="/admin/officer/add" method="POST">
+          <fieldset>
+            <label>
+              Username
+              <input name="username_field" required />
+            </label>
+            <label>Email</label>
+            <div class="email-group">
+            <input
+              type="text"
+              name="email_field"
+              required
+            />
+            <span class="email-suffix">@hedclass.com</span>
+          </div>
+            <label>
+              Password
+              <input type = "password" name="password_field" required />
+            </label>
+            <label>
+              Select assigned programme(s)
+            </label>
+            <select
+              multiple name="programme_field" required>
+              <% programmes.forEach(programme => { %>
+               <option value="<%= programme.id  %>"> <%= programme.title %> </option>
+              <% }); %>
+            </select>
+          </fieldset>
+          <button type="submit" class="submit-btn">Submit</button>
+      </form>
+      </div>
+      </div>
+    </main>
+  </body>
+</html>

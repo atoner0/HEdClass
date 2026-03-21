@@ -51,7 +51,11 @@
               <th scope="row"><%= officer.id %></th>
               <td><%= officer.username %></td>
               <td><%= officer.email %></td>
-              <td><%= officer.title %></td>
+              <td>
+                <% officer.programmes.split(',').forEach((programme) => { %>
+                 <div><%= programme %></div>
+                <% }) %>
+              </td>
               <td><a href="/admin/officers/<%= officer.id %>" class="table-btn">Edit</a></td>
               <td><form action="/admin/officers/delete/<%= officer.id %>" method="POST">
                         <button class="table-btn">Delete</button>
@@ -60,8 +64,9 @@
              <% }) %>
           </tbody>
         </table>
-       
-
+        <div class = "manage-btn">
+          <a href = "/admin/officer/add" class = "manage"> Add Officer </a>
+        </div>
       </div>
     </main>
   </body>

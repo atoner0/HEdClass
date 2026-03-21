@@ -4,7 +4,14 @@ nav {
   --pico-h3-color: white;
 }
 
+.submit-btn {
+  background-color: #375e40;
+  border: none;
+}
 
+.submit-btn:hover {
+  background-color: #52835d;
+}
 
 /*----LOGIN----*/
 
@@ -23,11 +30,6 @@ nav {
 .logincont form {
   width: 100%;
   max-width: 420px;
-}
-
-.logincont button {
-  background-color: #375e40;
-  border: none;
 }
 
 .email-group {
@@ -138,6 +140,12 @@ a.manage:hover {
 .table-btn:hover {
   background-color: #30605b;
 }
+
+.form {
+  margin: 20px auto;
+  max-width: 60%;
+}
+
 
 
 
