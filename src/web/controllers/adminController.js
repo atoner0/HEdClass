@@ -31,9 +31,9 @@ const getOfficers = async (req, res) => {
 
 const adminUpdateOfficer = async (req, res) => {
     const user = req.session.user;
-    const userId = req.params.id;
+    const officerId = req.params.id;
 
-    const officerData = await adminModel.getOneOfficer(userId);
+    const officerData = await adminModel.getOneOfficer(officerId);
     const officer = officerData[0];
 
     const programmes = await adminModel.getProgrammes();
@@ -88,7 +88,23 @@ const postAddOfficer = async (req, res) => {
     res.redirect("/admin/officers");
 };
 
+const adminDeleteOfficer = async (req, res) => {
+
+    try {
+     const officerId = req.params.id;
+
+    await adminModel.resetProgrammes(officerId);
+    await adminModel.deleteOfficerUser(officerId);
+
+    res.redirect("/admin/officers");       
+    } catch (error) {
+        console.error("Controller error:", error);
+        res.status(500).send("Error deleting officer");
+    }
+
+};
+
 export default {
     getAdminDash, getOfficers, updateOfficer: adminUpdateOfficer, postAdminUpdateOfficer,
-    getAddOfficer, postAddOfficer
+    getAddOfficer, postAddOfficer, adminDeleteOfficer
 };

@@ -23,7 +23,7 @@ const getOfficers = async () => {
     }
 };
 
-const getOneOfficer = async (id) => {
+const getOneOfficer = async (officerId) => {
     const sql = `SELECT users.id, users.username, users.email, officer_programmes.programme_id
                  FROM users
                  INNER JOIN officer_programmes
@@ -34,7 +34,7 @@ const getOneOfficer = async (id) => {
                     officer_programmes.programme_id = programmes.id
                  WHERE users.id = ?`;
     try {
-           const [rows] = await db.promise().query(sql, [id]);
+           const [rows] = await db.promise().query(sql, [officerId]);
            return rows;
     } catch (error) {
         console.error("Model error:", error);
@@ -56,13 +56,13 @@ const getProgrammes = async () => {
 
 };
 
-const updateOfficer = async (userId, username, email,) => {
+const updateOfficer = async (officerId, username, email,) => {
     const sql = `UPDATE users 
                 SET username = ?, email = ?
                 WHERE id = ? `
 
     try {
-           const [rows] = await db.promise().query(sql, [username, email, userId]);
+           const [rows] = await db.promise().query(sql, [username, email, officerId]);
            return rows;
     } catch (error) {
         console.error("Model error:", error);
@@ -70,12 +70,12 @@ const updateOfficer = async (userId, username, email,) => {
     }
 };
 
-const resetProgrammes = async (userId) => {
+const resetProgrammes = async (officerId) => {
 
     const sql = `DELETE FROM officer_programmes WHERE officer_id = ?`
 
     try {
-           const [rows] = await db.promise().query(sql, [userId]);
+           const [rows] = await db.promise().query(sql, [officerId]);
            return rows;
     } catch (error) {
         console.error("Model error:", error);
@@ -83,13 +83,13 @@ const resetProgrammes = async (userId) => {
     }
 };
 
-const updateOfficerProgrammes = async (userId, programmeId) => {
+const updateOfficerProgrammes = async (officerId, programmeId) => {
 
     const sql = `INSERT INTO officer_programmes (officer_id, programme_id)
                                 VALUES (?, ?)`
 
     try {
-           const [rows] = await db.promise().query(sql, [userId, programmeId]);
+           const [rows] = await db.promise().query(sql, [officerId, programmeId]);
            return rows;
     } catch (error) {
         console.error("Model error:", error);
@@ -110,8 +110,19 @@ const addOfficer = async (username, email, password_hash, role) => {
     }
 };
 
+const deleteOfficerUser = async(officerId) => {
+    const sql = `DELETE FROM users WHERE id = ?`
+
+        try {
+           const [rows] = await db.promise().query(sql, [officerId]);
+           return rows;
+    } catch (error) {
+        console.error("Model error:", error);
+        throw error;
+    }
+};
 
 
 export default { getOfficers, getOneOfficer, getProgrammes, updateOfficer, resetProgrammes, updateOfficerProgrammes,
-                    addOfficer
+                    addOfficer, deleteOfficerUser
  };
