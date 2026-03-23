@@ -35,44 +35,36 @@
       </nav>
       <div class="container">
         <div class="form">
-          <form action="/admin/programme/edit" method="POST">
-            <fieldset>
-              <label>
-                ID
-                <input name="id_field" readonly value="<%= programme.id %>" />
-              </label>
-              <label>
-                Title
-                <input name="title_field" value="<%= programme.title %>" />
-              </label>
-              <label>
-                Code
-                <input name="code_field" value="<%= programme.code %>" />
-              </label>
-              <label>
-                Award Type
-              </label>
+            <form action="/admin/programme/add" method="POST">
+          <fieldset>
+            <label>
+              Title
+              <input name="title_field" required />
+            </label>
+            <label>
+              Code
+              <input name="code_field" required />
+            </label>
+            <label>
+             Award Type
+            </label>
                 <select
                   name="award_field"
                   aria-label="Select award type"
                   required>
-              <% awards.forEach(award => { %>
-               <option value="<%= award  %>" <%= programme.award_type === award ? "selected" : "" %>>
-                <%= award %>
-              </option>
-              <% }); %>
+                  <option value="" disabled selected>Select award type</option>
+                    <% awards.forEach(award => { %>
+                    <option value="<%= award  %>"><%= award %></option>    
+                    <% }); %>
                 </select>
-              <label>
-                Academic Year
-                <input
-                  name="year_field"
-                  value="<%= programme.academic_year %>"
-                />
-              </label>
-            </fieldset>
-            <button type="submit" class="submit-btn">Submit</button>
-          </form>
-        </div>
+            <label>
+              Academic Year
+              <input name="year_field" required />
+            </label>
+          </fieldset>
+          <button type="submit" class="submit-btn">Submit</button>
+      </form>
+      </div>
       </div>
     </main>
   </body>

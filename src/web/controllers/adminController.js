@@ -120,11 +120,12 @@ const getProgrammes = async (req, res) => {
 const updateProgramme = async (req, res) => {
     const user = req.session.user;
     const programmeId = req.params.id;
+    const awards = ["BA", "BSc", "Bed", "BEng", "LLB", "MB ChB"];
 
     const programmeData = await adminModel.getOneProgramme(programmeId);
     const programme = programmeData[0];
 
-    res.render("editProgramme", { user, programme });
+    res.render("editProgramme", { user, programme, awards });
 };
 
 const postUpdateProgramme = async (req, res) => {
@@ -137,8 +138,39 @@ const postUpdateProgramme = async (req, res) => {
     res.redirect("/admin/programmes");
 }
 
+const getAddProgramme = async (req, res) => {
+    const user = req.session.user;
+    const programmes = await adminModel.getProgrammes();
+    const awards = ["BA", "BSc", "Bed", "BEng", "LLB", "MB ChB"];
+
+    res.render("addProgramme", { user, programmes, awards });
+};
+
+const postAddProgramme = async (req, res) => {
+    const fData = { ...req.body };
+
+    await adminModel.addProgramme(fData.title_field, fData.code_field, fData.award_field, fData.year_field)
+
+    res.redirect("/admin/programmes");
+};
+
+const adminDeleteProgramme = async (req, res) => {
+
+    try {
+     const programmeId = req.params.id;
+
+    await adminModel.deleteProgramme(programmeId);
+
+    res.redirect("/admin/programmes");       
+    } catch (error) {
+        console.error("Controller error:", error);
+        res.status(500).send("Error deleting programme");
+    }
+
+};
+
 export default {
-    getAdminDash, getOfficers, updateOfficer: adminUpdateOfficer, postAdminUpdateOfficer,
-    getAddOfficer, postAddOfficer, adminDeleteOfficer, getProgrammes, updateProgramme,
-    postUpdateProgramme
+    getAdminDash, getOfficers, adminUpdateOfficer, postAdminUpdateOfficer,
+    getAddOfficer, postAddOfficer, adminDeleteOfficer, getProgrammes, getUpdateProgramme: updateProgramme,
+    postUpdateProgramme, getAddProgramme, postAddProgramme, adminDeleteProgramme
 };

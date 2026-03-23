@@ -151,7 +151,32 @@ const updateProgramme = async (title, code, award, year, programmeId) => {
     }
 };
 
+const addProgramme = async (title, code, award, year) => {
+    const sql = `INSERT INTO programmes (title, code, award_type, academic_year)
+                    VALUES (?, ?, ?, ?)`
+
+    try {
+           const [rows] = await db.promise().query(sql, [title, code, award, year]);
+           return rows;
+    } catch (error) {
+        console.error("Model error:", error);
+        throw error;
+    }
+};
+
+const deleteProgramme = async(programmeId) => {
+    const sql = `DELETE FROM programmes WHERE id = ?`
+
+        try {
+           const [rows] = await db.promise().query(sql, [programmeId]);
+           return rows;
+    } catch (error) {
+        console.error("Model error:", error);
+        throw error;
+    }
+};
+
 
 export default { getOfficers, getOneOfficer, getProgrammes, getOneProgramme, updateOfficer, resetProgrammes, updateOfficerProgrammes,
-                    addOfficer, deleteOfficerUser, updateProgramme
+                    addOfficer, deleteOfficerUser, updateProgramme, addProgramme, deleteProgramme
  };
