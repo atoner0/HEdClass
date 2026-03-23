@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Management</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
+    />
+
+    <link rel="stylesheet" href="/myui.css" />
+  </head>
+
+  <body>
+    <main class="container-fluid">
+      <nav class="user-nav">
+        <div class="left">
+          <ul class="user-title">
+            <li><h3>Student Management</h3></li>
+          </ul>
+          <ul class="user-btns">
+            <li><a href="/officer" class="nav-btn">Home</a></li>
+            <li><a href="/officer/statistics" class="nav-btn">Statistics</a></li>
+          </ul>
+        </div>
+        <div class="right">
+          <ul class="logout">
+            <li>Hello <%= user.username %> </li>
+            <li><a href="/logout" class="nav-btn">Log Out</a></li>
+          </ul>
+        </div>
+      </nav>
+       <div class="user-content">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Student No.</th>
+              <th scope="col">First Name</th>
+              <th scope="col">Surname</th>
+              <th scope="col">Email</th>
+              <th scope="col">Study Year</th>
+              <th scope="col">Graduation Year</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% students.forEach(student => { %>
+            <tr>
+              <th scope="row"><%= student.id %></th>
+              <td><%= student.student_no %></td>
+              <td><%= student.first_name %></td>
+              <td><%= student.last_name %></td>
+              <td><%= student.email %></td>
+              <td><%= student.study_year %></td>
+              <td><%= student.graduation_year %></td>
+            </tr>
+             <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </body>
+</html>

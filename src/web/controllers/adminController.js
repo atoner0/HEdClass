@@ -38,7 +38,7 @@ const adminUpdateOfficer = async (req, res) => {
 
     const programmes = await adminModel.getProgrammes();
 
-    res.render("editOfficer", { user, officer, programmes });
+    res.render("adminEditOfficer", { user, officer, programmes });
 };
 
 const postAdminUpdateOfficer = async (req, res) => {
@@ -62,7 +62,7 @@ const getAddOfficer = async (req, res) => {
     const user = req.session.user;
     const programmes = await adminModel.getProgrammes();
 
-    res.render("addOfficer", { user, programmes });
+    res.render("adminAddOfficer", { user, programmes });
 };
 
 const postAddOfficer = async (req, res) => {
@@ -125,7 +125,7 @@ const updateProgramme = async (req, res) => {
     const programmeData = await adminModel.getOneProgramme(programmeId);
     const programme = programmeData[0];
 
-    res.render("editProgramme", { user, programme, awards });
+    res.render("adminEditProgramme", { user, programme, awards });
 };
 
 const postUpdateProgramme = async (req, res) => {
@@ -143,7 +143,7 @@ const getAddProgramme = async (req, res) => {
     const programmes = await adminModel.getProgrammes();
     const awards = ["BA", "BSc", "Bed", "BEng", "LLB", "MB ChB"];
 
-    res.render("addProgramme", { user, programmes, awards });
+    res.render("adminAddProgramme", { user, programmes, awards });
 };
 
 const postAddProgramme = async (req, res) => {

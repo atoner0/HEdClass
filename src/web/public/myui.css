@@ -43,27 +43,27 @@ nav {
   padding-bottom: 20px;
 }
 
-/*-----ADMIN-----*/
-.admin-nav {
+/*-----ADMIN/OFFICERS-----*/
+.user-nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding-left: 10px;
 }
 
-.admin-nav .left {
+.user-nav .left {
   display: flex;
   align-items: center;
   gap: 15px;
 }
 
-.admin-nav .right {
+.user-nav .right {
   display: flex;
   align-items: center;
   gap: 15px;
 }
 
-.admin-title{
+.user-title{
   padding-top: 1%;
 }
 
@@ -81,11 +81,15 @@ a.nav-btn:hover {
   background-color: #52835d
 }
 
-.admin-content {
+.user-content {
   display: flex;
   justify-content: space-evenly;
   flex-direction: column;
-  
+}
+
+.content-title {
+  --pico-h4-color: white;
+  margin-top: 1%;
 }
 
 .cards  {

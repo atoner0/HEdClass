@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Officer Dashboard</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
+    />
+
+    <link rel="stylesheet" href="myui.css" />
+  </head>
+
+  <body>
+    <main class="container-fluid">
+      <nav class="user-nav">
+        <div class="left">
+          <ul class="user-title">
+            <li><h3>Officer Dashboard</h3></li>
+          </ul>
+          <ul class="user-btns">
+            <li><a href="/officer" class="nav-btn">Home</a></li>
+            <li><a href="/officer/statistics" class="nav-btn">Statistics</a></li>
+          </ul>
+        </div>
+        <div class="right">
+          <ul class="logout">
+            <li>Hello <%= user.username %> </li>
+            <li><a href="/logout" class="nav-btn">Log Out</a></li>
+          </ul>
+        </div>
+      </nav>
+       <div class="user-content">
+        <div class="content-title"><h4>Assigned Programmes:</h4></div>
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Title</th>
+              <th scope="col">Code</th>
+              <th scope="col">Academic Year</th>
+              <th scope="col">Number of Students</th>
+              <th scope="col"></th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% programmes.forEach(programme => { %>
+            <tr>
+              <th scope="row"><%= programme.id %></th>
+              <td><%= programme.title %></td>
+              <td><%= programme.code %></td>
+              <td><%= programme.academic_year %></td>
+              <td><%= programme.student_count %></td>
+              <td><a href="/officer/programme/<%= programme.id %>/students" class="table-btn">Manage Cohort</a></td>
+            </tr>
+             <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </body>
+</html>

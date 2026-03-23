@@ -2,6 +2,7 @@ import express from "express";
 import session from "express-session";
 import loginRoutes from "./routes/loginRoutes.js"
 import adminRoutes from "./routes/adminRoutes.js"
+import officerRoutes from "./routes/officerRoutes.js"
 
 const app = express();
 const PORT = 4000;
@@ -27,6 +28,7 @@ app.use(session({
 // ROUTES // 
 app.use("", loginRoutes);
 app.use("/admin", adminRoutes);
+app.use("/officer", officerRoutes);
 
 
 app.listen(PORT, (err) => {
