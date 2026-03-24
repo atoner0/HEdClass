@@ -111,7 +111,7 @@ const getStudentResults = async (req, res) => {
         let total = 0;
 
         groupedModules[year].forEach(mod => {
-            if(!mod.is_resit){
+            if(!mod.is_resit && mod.passed === 1){
                 total += Number(mod.credits);
             }
         });
