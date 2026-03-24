@@ -1,4 +1,5 @@
 import officerModel from "../models/officerModel.js";
+import adminModel from "../models/adminModel.js"
 
 
 const getOfficerDash = async (req, res) => {
@@ -94,6 +95,9 @@ const getStudentResults = async (req, res) => {
 
     const modules = await officerModel.getModules(studentId);
 
+    const programmeData = await adminModel.getOneProgramme(programmeId);
+    const programme = programmeData[0];
+
     const groupedModules = {};
     modules.forEach(mod => {
         if (!groupedModules[mod.academic_level]) {
@@ -102,7 +106,33 @@ const getStudentResults = async (req, res) => {
         groupedModules[mod.academic_level].push(mod);
     });
 
-    res.render("officerStudentResults", { user, student, groupedModules, programmeId });
+    const creditsByYear = {};
+    Object.keys(groupedModules).forEach(year => {
+        let total = 0;
+
+        groupedModules[year].forEach(mod => {
+            if(!mod.is_resit){
+                total += Number(mod.credits);
+            }
+        });
+
+        creditsByYear[year] = total;
+    });
+
+    const avgByYear = {};
+    Object.keys(groupedModules).forEach(year => {
+        let count = 0;
+        let sum = 0;
+
+        groupedModules[year].forEach(mod => {
+            sum += Number(mod.capped_mark);
+            count += 1;
+
+            avgByYear[year] = (sum/count).toFixed(2);
+        });
+    });
+
+    res.render("officerStudentResults", { user, student, programme, groupedModules, creditsByYear, avgByYear });
 };
 
 export default { getOfficerDash, getProgrammeStudents, getUpdateStudent, postUpdateStudent, getAddStudent, postAddStudent,      

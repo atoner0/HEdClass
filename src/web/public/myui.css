@@ -1,7 +1,14 @@
-nav {
-  background-color: #1f3d3a;
+body {
   --pico-color: white;
   --pico-h3-color: white;
+  --pico-h4-color: white;
+  --pico-h5-color: white;
+  --pico-h6-color: white;
+}
+
+nav {
+  background-color: #1f3d3a;
+
 }
 
 .submit-btn {
@@ -85,10 +92,10 @@ a.nav-btn:hover {
   display: flex;
   justify-content: space-evenly;
   flex-direction: column;
+
 }
 
 .content-title {
-  --pico-h4-color: white;
   margin-top: 1%;
 }
 
@@ -103,17 +110,14 @@ a.nav-btn:hover {
 
 .cards article {
   background-color: #375e40;
-  --pico-color: white;
-  --pico-h5-color: white;
   margin: 1%;
   padding: 1.5%;
 }
 
 .manage-btn{
-  margin-top: 2%;
+  margin: 2%;
   display: flex;
   justify-content: center;
-
 }
 
 a.manage {
@@ -148,6 +152,30 @@ a.manage:hover {
 .form {
   margin: 20px auto;
   max-width: 60%;
+}
+
+.student-content{
+  display: flex;
+}
+
+.student-info {
+  padding: 10px;
+}
+
+.student-table .year {
+  background-color: #375e40;
+}
+
+.edit-btn {
+  margin: 5%;
+}
+
+
+.result-stats {
+  border-top: 2px solid #2f4f4f;
+  margin-top: 20px;
+  padding-top: 10px;
+  text-align: center;
 }
 
 

@@ -91,7 +91,8 @@ const deleteStudent = async(studentId) => {
 
 const getModules = async(studentId) => {
     const sql =    `SELECT modules.module_code, modules.module_title, modules.academic_level, modules.credits,
-                        results.mark, results.is_resit, results.capped_mark, results.passed
+                        results.id AS resultsId, results.attempt_no, results.mark, results.is_resit, 
+                        results.capped_mark, results.passed
                     FROM results
                     INNER JOIN modules
                     ON modules.id = results.module_id
