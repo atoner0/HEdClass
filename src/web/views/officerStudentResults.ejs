@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Management</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
+    />
+
+    <link rel="stylesheet" href="/myui.css" />
+  </head>
+
+  <body>
+    <main class="container-fluid">
+      <nav class="user-nav">
+        <div class="left">
+          <ul class="user-title">
+            <li><h3>Student Management</h3></li>
+          </ul>
+          <ul class="user-btns">
+            <li><a href="/officer" class="nav-btn">Home</a></li>
+            <li><a href="/officer/statistics" class="nav-btn">Statistics</a></li>
+          </ul>
+        </div>
+        <div class="right">
+          <ul class="logout">
+            <li>Hello <%= user.username %> </li>
+            <li><a href="/logout" class="nav-btn">Log Out</a></li>
+          </ul>
+        </div>
+      </nav>
+       <div class="user-content">
+        <div class="student-info">
+            <h5><%= student.student_no %> | <%= student.first_name %> <%= student.last_name %></h5>
+        </div>
+        <% Object.keys(groupedModules).forEach(year => { %>
+            <h6> Year: <%= year %> </h6>
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Module Code</th>
+              <th scope="col">Title</th>
+              <th scope="col">Credits</th>
+              <th scope="col">Resit?</th>
+              <th scope="col">Mark</th>
+              <th scope="col">Passed?</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% groupedModules[year].forEach(mod => { %>
+            <tr>
+              <th scope="row"><%= mod.module_code %></th>
+              <td><%= mod.module_title %></td>
+              <td><%= mod.credits %></td>
+              <% if (mod.is_resit) { %>
+               <td> Yes </td> 
+               <td><%= mod.capped_mark %></td>
+               <% } else { %>
+                <td> No </td>
+                <td><%= mod.mark %> </td>
+              <% } %>
+              <td> <% if (mod.passed) { %>
+                Yes
+               <% } else { %>
+                No
+              <% } %></td>
+            </tr>
+             <% }) %>
+          </tbody>
+        </table>
+        <% }) %>
+      </div>
+    </main>
+  </body>
+</html>

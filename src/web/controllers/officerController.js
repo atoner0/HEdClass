@@ -85,5 +85,25 @@ const officerDeleteStudent = async (req, res) => {
 
 };
 
+const getStudentResults = async (req, res) => {
+    const user = req.session.user;
+    const {programmeId, studentId} = req.params;
+
+    const studentData = await officerModel.getOneStudent(studentId);
+    const student = studentData[0];
+
+    const modules = await officerModel.getModules(studentId);
+
+    const groupedModules = {};
+    modules.forEach(mod => {
+        if (!groupedModules[mod.academic_level]) {
+            groupedModules[mod.academic_level] = [];
+        }
+        groupedModules[mod.academic_level].push(mod);
+    });
+
+    res.render("officerStudentResults", { user, student, groupedModules, programmeId });
+};
+
 export default { getOfficerDash, getProgrammeStudents, getUpdateStudent, postUpdateStudent, getAddStudent, postAddStudent,      
-                    officerDeleteStudent }
+                    officerDeleteStudent, getStudentResults }

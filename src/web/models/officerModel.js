@@ -89,5 +89,26 @@ const deleteStudent = async(studentId) => {
     }
 };
 
+const getModules = async(studentId) => {
+    const sql =    `SELECT modules.module_code, modules.module_title, modules.academic_level, modules.credits,
+                        results.mark, results.is_resit, results.capped_mark, results.passed
+                    FROM results
+                    INNER JOIN modules
+                    ON modules.id = results.module_id
+                    LEFT JOIN students
+                    ON students.id = results.student_id
+                    WHERE results.student_id = ?`
 
-export default { getOfficerProgrammes, getStudents, getOneStudent, updateStudent, addStudent, deleteStudent }
+    try {
+           const [rows] = await db.promise().query(sql, [studentId]);
+           return rows;
+    } catch (error) {
+        console.error("Model error:", error);
+        throw error;
+    }
+};
+
+
+export default { getOfficerProgrammes, getStudents, getOneStudent, updateStudent, addStudent, deleteStudent,
+                    getModules
+ };
