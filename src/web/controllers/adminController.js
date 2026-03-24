@@ -117,7 +117,7 @@ const getProgrammes = async (req, res) => {
     res.render("adminProgrammes", { user, programmes });
 };
 
-const updateProgramme = async (req, res) => {
+const getUpdateProgramme = async (req, res) => {
     const user = req.session.user;
     const programmeId = req.params.id;
     const awards = ["BA", "BSc", "Bed", "BEng", "LLB", "MB ChB"];
@@ -171,6 +171,6 @@ const adminDeleteProgramme = async (req, res) => {
 
 export default {
     getAdminDash, getOfficers, adminUpdateOfficer, postAdminUpdateOfficer,
-    getAddOfficer, postAddOfficer, adminDeleteOfficer, getProgrammes, getUpdateProgramme: updateProgramme,
+    getAddOfficer, postAddOfficer, adminDeleteOfficer, getProgrammes, getUpdateProgramme: getUpdateProgramme,
     postUpdateProgramme, getAddProgramme, postAddProgramme, adminDeleteProgramme
 };

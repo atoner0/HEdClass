@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Management</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
+    />
+
+    <link rel="stylesheet" href="/myui.css" />
+  </head>
+
+  <body>
+    <main class="container-fluid">
+      <nav class="user-nav">
+        <div class="left">
+          <ul class="user-title">
+            <li><h3>Student Management</h3></li>
+          </ul>
+          <ul class="user-btns">
+            <li><a href="/officer" class="nav-btn">Home</a></li>
+            <li><a href="/officer/statistics" class="nav-btn">Statistics</a></li>
+          </ul>
+        </div>
+        <div class="right">
+          <ul class="logout">
+            <li>Hello <%= user.username %> </li>
+            <li><a href="/logout" class="nav-btn">Log Out</a></li>
+          </ul>
+        </div>
+      </nav>
+      <div class="container">
+        <div class="form">
+      <form action="/officer/programme/<%= programmeId %>/student/<%= student.id %>/edit" method="POST">
+          <fieldset>
+            <label>
+              ID
+              <input name="id_field" readonly value="<%= student.id %>" />
+            </label>
+            <label>
+              Student No.
+              <input name="studentNo_field" value="<%= student.student_no %>" />
+            </label>
+            <label>
+              First Name
+              <input name="firstName_field" value="<%= student.first_name %>" />
+            </label>
+            <label>
+              Surname
+              <input name="surname_field" value="<%= student.last_name %>" />
+            </label>
+            <label>
+              Email
+              <input name="email_field" value="<%= student.email %>" />
+            </label>
+            <label>
+              Study Year
+              <input name="studyYear_field" value="<%= student.study_year %>" />
+            </label>
+            <label>
+              Graduation Year
+              <input name="gradYear_field" value="<%= student.graduation_year %>" />
+            </label>
+          </fieldset>
+          <button type="submit" class="submit-btn">Submit</button>
+      </form>
+      </div>
+      </div>
+    </main>
+  </body>
+</html>

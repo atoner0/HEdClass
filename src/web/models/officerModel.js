@@ -34,4 +34,60 @@ const getStudents = async (programmeId) => {
     }
 }
 
-export default { getOfficerProgrammes, getStudents }
+const getOneStudent = async (studentId) => {
+
+    const sql = `SELECT * FROM students 
+                    WHERE id = ?`;
+
+    try {
+           const [rows] = await db.promise().query(sql, [studentId]);
+           return rows;
+    } catch (error) {
+        console.error("Model error:", error);
+        throw error;
+    }
+
+};
+
+const updateStudent = async (student_no, first_name, surname, email, study_year, grad_year, studentId) => {
+    const sql = `UPDATE students 
+                SET student_no = ?, first_name = ?, last_name = ?, email = ?, study_year = ?, graduation_year = ?
+                WHERE id = ? `
+
+    try {
+           const [rows] = await db.promise().query(sql, [student_no, first_name, surname, email, study_year, grad_year, studentId]);
+           return rows;
+    } catch (error) {
+        console.error("Model error:", error);
+        throw error;
+    }
+};
+
+
+const addStudent = async (student_no, first_name, surname, email, programmeId, study_year, grad_year) => {
+    const sql = `INSERT INTO students (student_no, first_name, last_name, email, programme_id, study_year, graduation_year)
+                    VALUES (?, ?, ?, ?, ?, ?, ?)`
+
+    try {
+           const [rows] = await db.promise().query(sql, [student_no, first_name, surname, email, programmeId, study_year, grad_year]);
+           return rows;
+    } catch (error) {
+        console.error("Model error:", error);
+        throw error;
+    }
+};
+
+const deleteStudent = async(studentId) => {
+    const sql = `DELETE FROM students WHERE id = ?`
+
+        try {
+           const [rows] = await db.promise().query(sql, [studentId]);
+           return rows;
+    } catch (error) {
+        console.error("Model error:", error);
+        throw error;
+    }
+};
+
+
+export default { getOfficerProgrammes, getStudents, getOneStudent, updateStudent, addStudent, deleteStudent }
