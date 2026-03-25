@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Management</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
+    />
+
+    <link rel="stylesheet" href="/myui.css" />
+  </head>
+
+  <body>
+    <main class="container-fluid">
+      <nav class="user-nav">
+        <div class="left">
+          <ul class="user-title">
+            <li><h3>Student Management</h3></li>
+          </ul>
+          <ul class="user-btns">
+            <li><a href="/officer" class="nav-btn">Home</a></li>
+            <li><a href="/officer/statistics" class="nav-btn">Statistics</a></li>
+          </ul>
+        </div>
+        <div class="right">
+          <ul class="logout">
+            <li>Hello <%= user.username %> </li>
+            <li><a href="/logout" class="nav-btn">Log Out</a></li>
+          </ul>
+        </div>
+      </nav>
+      <div class="container">
+        <div class="form">
+      <form action="/officer/programme/<%= programmeId %>/student/<%= studentId %>/result/<%= result.resultId %>/edit" method="POST">
+          <fieldset>
+            <label>
+              ID
+              <input name="id_field" readonly value="<%= result.resultId %>" />
+            </label>
+            <label>
+              Module Code
+              <input name="moduleCode_field" readonly value="<%= result.module_code %>" />
+            </label>
+            <label>
+              Title
+              <input name="title_field" readonly value="<%= result.module_title %>" />
+            </label>
+            <label>
+              Credits
+              <input name="credits_field" readonly value="<%= result.credits %>" />
+            </label>
+            <label>
+              Attempt
+              <input name="attempt_field" value="<%= result.attempt_no %>" />
+            </label>
+            <label>
+              Mark
+              <input name="mark_field" value="<%= result.mark %>" />
+            </label>
+            <label>Resit?</label>
+            <input type="radio"name="resit_field" value="1" 
+                            <%= result.is_resit == 1 ? "checked" : "" %> />
+            <label>Yes</label>
+            <input type="radio" name="resit_field" value="0" 
+                            <%= result.is_resit == 0 ? "checked" : "" %>/>
+            <label>No</label>
+          </fieldset>
+          <button type="submit" class="submit-btn">Submit</button>
+      </form>
+      </div>
+      </div>
+    </main>
+  </body>
+</html>

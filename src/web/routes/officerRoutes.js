@@ -10,6 +10,8 @@ router.get("/programme/:id/student/add", officerController.getAddStudent);
 router.post("/programme/:id/student/add", officerController.postAddStudent);
 router.post("/programme/:programmeId/student/delete/:studentId", officerController.officerDeleteStudent);
 router.get("/programme/:programmeId/student/:studentId/results", officerController.getStudentResults);
+router.get("/programme/:programmeId/student/:studentId/result/:resultId/edit", officerController.getUpdateResult);
+router.post("/programme/:programmeId/student/:studentId/result/:resultId/edit", officerController.postUpdateResult);
 
 
 export default router;

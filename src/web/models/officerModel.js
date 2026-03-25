@@ -91,7 +91,7 @@ const deleteStudent = async(studentId) => {
 
 const getModules = async(studentId) => {
     const sql =    `SELECT modules.module_code, modules.module_title, modules.academic_level, modules.credits,
-                        results.id AS resultsId, results.attempt_no, results.mark, results.is_resit, 
+                        results.id AS resultId, results.attempt_no, results.mark, results.is_resit, 
                         results.capped_mark, results.passed
                     FROM results
                     INNER JOIN modules
@@ -109,7 +109,41 @@ const getModules = async(studentId) => {
     }
 };
 
+const getOneModule = async(resultId) => {
+    const sql = `SELECT modules.module_code, modules.module_title, modules.academic_level, modules.credits,
+                        results.id AS resultId, results.attempt_no, results.mark, results.is_resit, 
+                        results.capped_mark, results.passed
+                    FROM results
+                    INNER JOIN modules
+                    ON modules.id = results.module_id
+                    WHERE results.id = ?`
+
+    try {
+           const [rows] = await db.promise().query(sql, [resultId]);
+           return rows;
+    } catch (error) {
+        console.error("Model error:", error);
+        throw error;
+    }
+};
+
+
+const updateResult = async(attemptNo, mark, resit, cappedMark, passed, resultId) => {
+    const sql = `UPDATE results
+           SET attempt_no = ?, mark = ?, is_resit = ?, capped_mark = ?, passed = ?
+           WHERE id = ?`
+
+    try {
+           const [rows] = await db.promise().query(sql, [attemptNo, mark, resit, cappedMark, passed, resultId]);
+           return rows;
+    } catch (error) {
+        console.error("Model error:", error);
+        throw error;
+    }
+};
+
+
 
 export default { getOfficerProgrammes, getStudents, getOneStudent, updateStudent, addStudent, deleteStudent,
-                    getModules
+                    getModules, getOneModule, updateResult
  };
