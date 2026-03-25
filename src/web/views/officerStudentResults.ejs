@@ -58,7 +58,7 @@
               <th scope="col">Attempt</th>
               <th scope="col">Mark</th>
               <th scope="col">Capped Mark</th>
-              <th scope="col">Passed?</th>
+              <th scope="col">Grade</th>
               <th scope="col"></th>
               <th scope="col"></th>
             </tr>
@@ -77,9 +77,9 @@
               <td><%= mod.mark %> </td>
               <td><%= mod.capped_mark %></td>
               <td> <% if (mod.passed) { %>
-                Yes
+                Pass
                <% } else { %>
-                No
+                Fail
               <% } %></td>
               <td><a href="/officer/programme/<%= programme.id %>/student/<%= student.id %>/result/<%= mod.resultId %>/edit" class="table-btn">Edit</a></td>
               <td><form action="/officer/programme/<%= programme.id %>/student/<%= student.id %>/result/<%= mod.resultId %>/delete" method="POST">
