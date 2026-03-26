@@ -1,5 +1,6 @@
 import officerModel from "../models/officerModel.js";
 import adminModel from "../models/adminModel.js"
+import classificationCalc from "../utils/classification.js"
 
 
 const getOfficerDash = async (req, res) => {
@@ -94,45 +95,28 @@ const getStudentResults = async (req, res) => {
     const student = studentData[0];
 
     const modules = await officerModel.getModulesResults(studentId);
+    const latestModules = classificationCalc.getLatestModuleResults(modules);
 
     const programmeData = await adminModel.getOneProgramme(programmeId);
     const programme = programmeData[0];
 
-    const groupedModules = {};
-    modules.forEach(mod => {
-        if (!groupedModules[mod.academic_level]) {
-            groupedModules[mod.academic_level] = [];
-        }
-        groupedModules[mod.academic_level].push(mod);
-    });
+    //for EJS display
+    const groupedModules = classificationCalc.groupByYear(modules);
 
-    const creditsByYear = {};
-    Object.keys(groupedModules).forEach(year => {
-        let total = 0;
-
-        groupedModules[year].forEach(mod => {
-            if(!mod.is_resit && mod.passed === 1){
-                total += Number(mod.credits);
-            }
-        });
-
-        creditsByYear[year] = total;
-    });
+    //for using in calculations
+    const groupedLatestModules = classificationCalc.groupByYear(latestModules);
 
     const avgByYear = {};
-    Object.keys(groupedModules).forEach(year => {
-        let count = 0;
-        let sum = 0;
-
-        groupedModules[year].forEach(mod => {
-            sum += Number(mod.capped_mark);
-            count += 1;
-
-            avgByYear[year] = (sum/count).toFixed(2);
-        });
+    Object.keys(groupedLatestModules).forEach(year => {
+        avgByYear[year] = classificationCalc.calculateYearAvg(groupedLatestModules[year])
     });
 
-    res.render("officerStudentResults", { user, student, programme, groupedModules, creditsByYear, avgByYear });
+    const creditsByYear = classificationCalc.calculateYearCredits(groupedLatestModules)
+    const finalAvg = classificationCalc.calculateFinalAvg(groupedLatestModules)
+
+    const classification = classificationCalc.calculateClassification(latestModules, groupedLatestModules)
+
+    res.render("officerStudentResults", { user, student, programme, groupedModules, creditsByYear, avgByYear, finalAvg, classification });
 };
 
 const getUpdateResult = async (req, res) => {

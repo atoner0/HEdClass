@@ -68,14 +68,12 @@
             <tr>
               <th scope="row"><%= mod.module_code %></th>
               <td><%= mod.module_title %></td>
-              <td><%= mod.credits %></td>
-              <% if (mod.is_resit) { %>
-               <td><%= mod.attempt_no %> (resit) </td> 
-               <% } else { %>
-                <td> <%= mod.attempt_no %> </td>
-              <% } %>
-              <td><%= mod.mark %> </td>
-              <td><%= mod.capped_mark %></td>
+              <td class ="center"><%= mod.credits %></td>
+              <td class ="<%= mod.attempt_no > 1 ? 'resit' : 'center' %>">
+                <%= mod.attempt_no > 1 ? `Resit (Attempt ` + mod.attempt_no + `)` :`1` %>
+              </td>
+              <td class = "center"><%= mod.mark %> </td>
+              <td class = "center"><%= mod.capped_mark %></td>
               <td> <% if (mod.passed) { %>
                 Pass
                <% } else { %>
@@ -101,6 +99,11 @@
           <a href = "/officer/programme/<%= programme.id %>/student/<%= student.id %>/result/add" class = "manage"> Add Result </a>
         </div>     
         <% }) %>
+      </div>
+      <div class="student-classification">
+        <h4>Proposed Classification:</h4>
+        <p><strong>Final Average: </strong> <%= finalAvg %></p>
+        <p><strong>Classification: </strong> <%= classification %></p>
       </div>
       </div>
     </main>

@@ -11,6 +11,10 @@ nav {
 
 }
 
+table th, table td {
+  text-align: center;
+}
+
 
 .submit-btn {
   background-color: #375e40;
@@ -179,6 +183,18 @@ a.manage:hover {
   padding-top: 10px;
   text-align: center;
 }
+
+.resit {
+  color: orange;
+}
+
+.student-classification {
+  background-color: #2b4933;
+  margin: 2%;
+  padding: 1%;
+  border-radius: 0.5rem;
+}
+
 
 
 
