@@ -93,7 +93,7 @@ const getStudentResults = async (req, res) => {
     const studentData = await officerModel.getOneStudent(studentId);
     const student = studentData[0];
 
-    const modules = await officerModel.getModules(studentId);
+    const modules = await officerModel.getModulesResults(studentId);
 
     const programmeData = await adminModel.getOneProgramme(programmeId);
     const programme = programmeData[0];
@@ -139,7 +139,7 @@ const getUpdateResult = async (req, res) => {
     const user = req.session.user;
     const {programmeId, studentId, resultId} = req.params;
 
-    const moduleData = await officerModel.getOneModule(resultId);
+    const moduleData = await officerModel.getOneModuleResult(resultId);
     const result = moduleData[0];
 
     res.render("officerEditStudentResult", { user, result, programmeId, studentId });
@@ -167,7 +167,58 @@ const postUpdateResult = async (req, res) => {
     await officerModel.updateResult(attemptNo, mark, isResit, cappedMark, passed, resultId)
 
     res.redirect(`/officer/programme/${programmeId}/student/${studentId}/results`);
-}
+};
+
+const getAddResult = async (req, res) => {
+    const user = req.session.user;
+    const {programmeId, studentId} = req.params;
+
+    const result = await officerModel.getModulesResults(studentId);
+    const modules = await officerModel.getModuleInfo(programmeId);
+
+        res.render("officerAddStudentResult", { user, programmeId, studentId, result, modules });
+};
+
+const postAddResult = async (req, res) => {
+    const fData = {...req.body};
+
+    const {programmeId, studentId} = req.params;
+
+    const moduleId = fData.module_field;
+
+    const mark = Number(fData.mark_field);
+    const attemptNo = Number(fData.attempt_field);
+    const isResit = Number(fData.resit_field)
+
+    const passed = mark >= 40 ? 1 : 0;
+
+    let cappedMark;
+    if (isResit == 1 && mark > 40) {
+        cappedMark = 40;
+    } else {
+        cappedMark = mark;
+    }
+
+    await officerModel.addResult(studentId, moduleId, attemptNo, mark, isResit, cappedMark, passed)
+
+    res.redirect(`/officer/programme/${programmeId}/student/${studentId}/results`);
+};
+
+const officerDeleteStudentResult = async (req, res) => {
+
+    try {
+     const {programmeId, studentId, resultId} = req.params;
+
+    await officerModel.deleteResult(resultId)
+
+    res.redirect(`/officer/programme/${programmeId}/student/${studentId}/results`);       
+    } catch (error) {
+        console.error("Controller error:", error);
+        res.status(500).send("Error deleting result");
+    }
+
+};
 
 export default { getOfficerDash, getProgrammeStudents, getUpdateStudent, postUpdateStudent, getAddStudent, postAddStudent,      
-                    officerDeleteStudent, getStudentResults, getUpdateResult, postUpdateResult }
+                    officerDeleteStudent, getStudentResults, getUpdateResult, postUpdateResult, getAddResult, postAddResult,
+                    officerDeleteStudentResult }

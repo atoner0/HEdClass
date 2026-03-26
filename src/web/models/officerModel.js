@@ -89,8 +89,8 @@ const deleteStudent = async(studentId) => {
     }
 };
 
-const getModules = async(studentId) => {
-    const sql =    `SELECT modules.module_code, modules.module_title, modules.academic_level, modules.credits,
+const getModulesResults = async(studentId) => {
+    const sql =    `SELECT modules.id AS moduleId, modules.module_code, modules.module_title, modules.academic_level, modules.credits,
                         results.id AS resultId, results.attempt_no, results.mark, results.is_resit, 
                         results.capped_mark, results.passed
                     FROM results
@@ -109,7 +109,7 @@ const getModules = async(studentId) => {
     }
 };
 
-const getOneModule = async(resultId) => {
+const getOneModuleResult = async(resultId) => {
     const sql = `SELECT modules.module_code, modules.module_title, modules.academic_level, modules.credits,
                         results.id AS resultId, results.attempt_no, results.mark, results.is_resit, 
                         results.capped_mark, results.passed
@@ -142,8 +142,46 @@ const updateResult = async(attemptNo, mark, resit, cappedMark, passed, resultId)
     }
 };
 
+const getModuleInfo = async(programmeId) => {
+    const sql = `SELECT * FROM modules
+                    WHERE programme_id = ?`
+
+        try {
+           const [rows] = await db.promise().query(sql, [programmeId]);
+           return rows;
+    } catch (error) {
+        console.error("Model error:", error);
+        throw error;
+    }
+};
+
+const addResult = async(studentId, moduleId, attemptNo, mark, isResit, cappedMark, passed) => {
+    const sql = `INSERT INTO results (student_id, module_id, attempt_no, mark, is_resit, capped_mark, passed)
+                 VALUES (?, ?, ?, ?, ?, ?, ?)`
+
+        try {
+           const [rows] = await db.promise().query(sql, [studentId, moduleId, attemptNo, mark, isResit, cappedMark, passed]);
+           return rows;
+    } catch (error) {
+        console.error("Model error:", error);
+        throw error;
+    }
+};
+
+const deleteResult = async(resultId) => {
+    const sql = `DELETE from results WHERE id = ?`
+
+        try {
+           const [rows] = await db.promise().query(sql, [resultId]);
+           return rows;
+    } catch (error) {
+        console.error("Model error:", error);
+        throw error;
+    }
+};
+
 
 
 export default { getOfficerProgrammes, getStudents, getOneStudent, updateStudent, addStudent, deleteStudent,
-                    getModules, getOneModule, updateResult
+                   getModulesResults, getOneModuleResult, updateResult, getModuleInfo, addResult, deleteResult
  };

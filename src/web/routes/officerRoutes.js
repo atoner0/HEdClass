@@ -12,6 +12,9 @@ router.post("/programme/:programmeId/student/delete/:studentId", officerControll
 router.get("/programme/:programmeId/student/:studentId/results", officerController.getStudentResults);
 router.get("/programme/:programmeId/student/:studentId/result/:resultId/edit", officerController.getUpdateResult);
 router.post("/programme/:programmeId/student/:studentId/result/:resultId/edit", officerController.postUpdateResult);
+router.get("/programme/:programmeId/student/:studentId/result/add", officerController.getAddResult);
+router.post("/programme/:programmeId/student/:studentId/result/add", officerController.postAddResult);
+router.post("/programme/:programmeId/student/:studentId/result/:resultId/delete", officerController.officerDeleteStudentResult)
 
 
 export default router;
