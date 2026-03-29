@@ -119,22 +119,28 @@ a.nav-btn:hover {
   padding: 1.5%;
 }
 
-.manage-btn{
-  margin: 2%;
-  display: flex;
-  justify-content: center;
+.cohort-btns {
+    display: flex;
+    justify-content: center;
+    align-items: center; /* 👈 aligns vertically */
+    gap: 20px;
 }
 
-a.manage {
+.cohort-btns form {
+    margin: 0;
+}
+
+a.manage, button.manage {
   background-color: #1a504a;
   color: white;
   text-decoration: none;
   font-size: larger;
   padding: 10px 15px;
   border-radius: 0.5rem;
+  border: none;
 }
 
-a.manage:hover {
+a.manage:hover, button.manage:hover {
   background-color: #407872;
 }
 

@@ -127,7 +127,6 @@ CREATE TABLE `classifications` (
 
 CREATE TABLE `overrides` (
   `id` int(11) AUTO_INCREMENT PRIMARY KEY,
-  `student_id` int(11) NOT NULL,
   `classification_id` int(11) NOT NULL,
   `override_class` varchar(50) NOT NULL,
   `reason` text NOT NULL,
@@ -447,7 +446,6 @@ ALTER TABLE `officer_programmes`
 -- Indexes for table `overrides`
 --
 ALTER TABLE `overrides`
-  ADD KEY `student_id` (`student_id`),
   ADD KEY `classification_id` (`classification_id`),
   ADD KEY `overriden_by` (`overriden_by`);
 
@@ -495,7 +493,6 @@ ALTER TABLE `officer_programmes`
 -- Constraints for table `overrides`
 --
 ALTER TABLE `overrides`
-  ADD CONSTRAINT `overrides_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `students` (`id`),
   ADD CONSTRAINT `overrides_ibfk_2` FOREIGN KEY (`classification_id`) REFERENCES `classifications` (`id`),
   ADD CONSTRAINT `overrides_ibfk_3` FOREIGN KEY (`overriden_by`) REFERENCES `users` (`id`);
 
