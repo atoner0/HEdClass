@@ -24,7 +24,7 @@ const getProgrammeStudents = async (req,res) => {
         return res.redirect("/");
     }
 
-    const programmeId = req.params.id;
+    const programmeId = req.params.programmeId;
 
     const students = await officerModel.getStudents(programmeId)
 
@@ -33,6 +33,10 @@ const getProgrammeStudents = async (req,res) => {
 
 const getUpdateStudent = async (req, res) => {
     const user = req.session.user;
+    if (!user) {
+        return res.redirect("/");
+    }
+
     const {programmeId, studentId} = req.params;
 
     const studentData = await officerModel.getOneStudent(studentId);
@@ -56,15 +60,19 @@ const postUpdateStudent = async (req, res) => {
 
 const getAddStudent = async (req, res) => {
     const user = req.session.user;
-    const students = await officerModel.getStudents();
-    const programmeId = Number(req.params.id);
+    if (!user) {
+        return res.redirect("/");
+    }
+    const programmeId = Number(req.params.programmeId);
 
+    const students = await officerModel.getStudents(programmeId);
+    
     res.render("officerAddStudent", { user, students, programmeId });
 };
 
 const postAddStudent = async (req, res) => {
     const fData = { ...req.body };
-    const programmeId = Number(req.params.id);
+    const programmeId = Number(req.params.programmeId);
 
     await officerModel.addStudent(fData.studentNo_field, fData.firstName_field, fData.surname_field, fData.email_field,
                                         programmeId, fData.studyYear_field, fData.gradYear_field);
@@ -89,6 +97,10 @@ const officerDeleteStudent = async (req, res) => {
 
 const getStudentResults = async (req, res) => {
     const user = req.session.user;
+    if (!user) {
+        return res.redirect("/");
+    }
+
     const {programmeId, studentId} = req.params;
 
     const studentData = await officerModel.getOneStudent(studentId);
@@ -111,16 +123,23 @@ const getStudentResults = async (req, res) => {
         avgByYear[year] = classificationCalc.calculateYearAvg(groupedLatestModules[year])
     });
 
-    const creditsByYear = classificationCalc.calculateYearCredits(groupedLatestModules)
-    const finalAvg = classificationCalc.calculateFinalAvg(groupedLatestModules)
+    const classificationData = classificationCalc.calculateClassificationResults(modules);
 
-    const classification = classificationCalc.calculateClassification(latestModules, groupedLatestModules)
+    const creditsByYear = classificationData.creditsByYear;
+    const finalAvg = classificationData.finalAvg;
 
-    res.render("officerStudentResults", { user, student, programme, groupedModules, creditsByYear, avgByYear, finalAvg, classification });
+    const proposedClass = classificationData.proposedClass;
+    const reason = classificationData.eligibilityReason;
+
+    res.render("officerStudentResults", { user, student, programme, groupedModules, creditsByYear, avgByYear, finalAvg, proposedClass, reason });
 };
 
 const getUpdateResult = async (req, res) => {
     const user = req.session.user;
+    if (!user) {
+        return res.redirect("/");
+    }
+
     const {programmeId, studentId, resultId} = req.params;
 
     const moduleData = await officerModel.getOneModuleResult(resultId);
@@ -155,6 +174,10 @@ const postUpdateResult = async (req, res) => {
 
 const getAddResult = async (req, res) => {
     const user = req.session.user;
+    if (!user) {
+        return res.redirect("/");
+    }
+
     const {programmeId, studentId} = req.params;
 
     const result = await officerModel.getModulesResults(studentId);
@@ -203,6 +226,32 @@ const officerDeleteStudentResult = async (req, res) => {
 
 };
 
+const postBatchClassification = async (req, res) => {
+    const user = req.session.user;
+    if (!user) {
+        return res.redirect("/");
+    }
+
+    const programmeId = req.params.programmeId;
+
+    const students = await officerModel.getStudents(programmeId);
+
+    for (const student of students){
+        const studentId = student.id;
+
+        const modules = await officerModel.getModulesResults(studentId);
+
+        const classificationData = classificationCalc.calculateClassificationResults(modules);
+
+        await officerModel.addClassification(studentId, classificationData.yr1Creds, classificationData.yr2Creds, classificationData.yr3Creds,
+                                                classificationData.yr2Avg, classificationData.yr3Avg, classificationData.finalAvg, 
+                                                classificationData.proposedClass, classificationData.isEligible, classificationData.eligibilityReason, user.id
+        )
+    }
+
+    res.redirect(`/officer/programme/${programmeId}/students`);
+};
+
 export default { getOfficerDash, getProgrammeStudents, getUpdateStudent, postUpdateStudent, getAddStudent, postAddStudent,      
                     officerDeleteStudent, getStudentResults, getUpdateResult, postUpdateResult, getAddResult, postAddResult,
-                    officerDeleteStudentResult }
+                    officerDeleteStudentResult, postBatchClassification }

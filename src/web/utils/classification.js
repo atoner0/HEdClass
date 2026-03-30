@@ -64,18 +64,21 @@ const getLatestModuleResults = (modules) => {
     return Object.values(latestResults);
 }
 
-const calculateClassification = (modules) => {
+const calculateClassificationResults = (modules) => {
 
     const latestResults = getLatestModuleResults(modules);
     const groupedModules = groupByYear(latestResults);
 
-    const finalAvg = calculateFinalAvg(groupedModules);
     const creditsByYear = calculateYearCredits(groupedModules)
 
-    let totalCredits = 0;
-    Object.keys(creditsByYear).forEach(year => {
-            totalCredits += creditsByYear[year];
-    });
+    const yr1Creds = creditsByYear[1] || 0;
+    const yr2Creds = creditsByYear[2] || 0;
+    const yr3Creds = creditsByYear[3] || 0;
+    let totalCredits = yr1Creds + yr2Creds + yr3Creds;
+
+    const yr2Avg = calculateYearAvg(groupedModules[2] || []);
+    const yr3Avg = calculateYearAvg(groupedModules[3] || []);
+    const finalAvg = calculateFinalAvg(groupedModules);
 
     let allYearsValid = true;
     Object.values(creditsByYear).forEach(credits => {
@@ -90,27 +93,40 @@ const calculateClassification = (modules) => {
             hasOutstandingFails = true;
         }
     })
-    
-    let classification;
 
-    if (totalCredits === 360 && allYearsValid && !hasOutstandingFails){
-        if (finalAvg >= 70){
-            classification = "First"
-        } else if (finalAvg >=60){
-            classification = "2:1"
-        } else if (finalAvg >=50){
-            classification = "2:2"
-        } else if (finalAvg >=40){
-            classification = "3rd"
-        } else {
-            classification = "Fail"
-        }
-    } else {
-        classification = "Not eligible"
+    let isEligible = true;
+    let eligibilityReason = "All credits passed & No outstanding failed modules"
+
+    if(totalCredits !== 360) {
+        isEligible = false;
+        eligibilityReason = "Student does not have 360 total credits";
+    } else if (!allYearsValid){
+        isEligible = false;
+        eligibilityReason = "Student does not have 120 credits in each year"
+    } else if (hasOutstandingFails){
+        isEligible = false;
+        eligibilityReason = "Student has outstanding failed modules"
     }
 
-    return classification;
+    let proposedClass = "Pending review";
+
+
+    if (isEligible){
+        if (finalAvg >= 70){
+            proposedClass = "First"
+        } else if (finalAvg >=60){
+            proposedClass = "2:1"
+        } else if (finalAvg >=50){
+            proposedClass = "2:2"
+        } else if (finalAvg >=40){
+            proposedClass = "3rd"
+        } else {
+            proposedClass = "Fail"
+        }
+    }
+
+    return {creditsByYear, yr1Creds, yr2Creds, yr3Creds, yr2Avg, yr3Avg, finalAvg, proposedClass, isEligible, eligibilityReason};
 
 };
 
-export default { calculateYearAvg, calculateYearCredits, calculateFinalAvg, groupByYear, getLatestModuleResults, calculateClassification }
+export default { calculateYearAvg, calculateYearCredits, calculateFinalAvg, groupByYear, getLatestModuleResults, calculateClassificationResults }

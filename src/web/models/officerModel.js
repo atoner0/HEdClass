@@ -180,8 +180,33 @@ const deleteResult = async(resultId) => {
     }
 };
 
+const addClassification = async(studentId, yr1Creds, yr2Creds, yr3Creds, yr2Avg, yr3Avg, finalAvg, proposedClass, isEligible, eligibilityReason, user) => {
+    const sqlCheckExists = `SELECT id FROM classifications WHERE student_id = ?`
+
+    const sqlInsert = `INSERT INTO classifications (student_id, yr1_creds, yr2_creds, yr3_creds, yr2_avg, yr3_avg, final_avg, proposed_class, 
+                                                is_eligible, eligibility_reason, classified_at, classified_by)
+                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), ?)`
+
+    const sqlUpdate = `UPDATE classifications
+                       SET student_id = ?, yr1_creds = ?, yr2_creds = ?, yr3_creds = ?, yr2_avg = ?, yr3_avg = ?, final_avg = ?, 
+                           proposed_class = ?, is_eligible = ?, eligibility_reason = ?, classified_at = NOW(), classified_by = ?`
+
+    try {
+           const [exists] = await db.promise().query(sqlCheckExists, [studentId]);
+           if (exists.length > 0){
+            await db.promise().query(sqlUpdate, [studentId, yr1Creds, yr2Creds, yr3Creds, yr2Avg, yr3Avg, finalAvg, proposedClass, isEligible, eligibilityReason, user])
+           } else {
+            await db.promise().query(sqlInsert, [studentId, yr1Creds, yr2Creds, yr3Creds, yr2Avg, yr3Avg, finalAvg, proposedClass, isEligible, eligibilityReason, user])
+           }
+    } catch (error) {
+        console.error("Model error:", error);
+        throw error;
+    }
+}
+
 
 
 export default { getOfficerProgrammes, getStudents, getOneStudent, updateStudent, addStudent, deleteStudent,
-                   getModulesResults, getOneModuleResult, updateResult, getModuleInfo, addResult, deleteResult
+                   getModulesResults, getOneModuleResult, updateResult, getModuleInfo, addResult, deleteResult,
+                   addClassification
  };

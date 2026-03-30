@@ -122,8 +122,15 @@ a.nav-btn:hover {
 .cohort-btns {
     display: flex;
     justify-content: center;
-    align-items: center; /* 👈 aligns vertically */
+    align-items: center; 
     gap: 20px;
+}
+
+.manage-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    margin: 20px;
 }
 
 .cohort-btns form {
@@ -173,7 +180,6 @@ a.manage:hover, button.manage:hover {
   padding: 10px;
 }
 
-
 .student-table .year {
   background-color: #375e40;
 }
@@ -181,7 +187,6 @@ a.manage:hover, button.manage:hover {
 .edit-btn {
   margin: 5%;
 }
-
 
 .result-stats {
   border-top: 2px solid #2f4f4f;
