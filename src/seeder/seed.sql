@@ -474,38 +474,39 @@ ALTER TABLE `students`
 -- Constraints for table `classifications`
 --
 ALTER TABLE `classifications`
-  ADD CONSTRAINT `classifications_ibfk_1` FOREIGN KEY (`classified_by`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `unique_student_classification` UNIQUE (`student_id`),
+  ADD CONSTRAINT `classified_by` FOREIGN KEY (`classified_by`) REFERENCES `users` (`id`);
 
 --
 -- Constraints for table `modules`
 --
 ALTER TABLE `modules`
-  ADD CONSTRAINT `modules_ibfk_1` FOREIGN KEY (`programme_id`) REFERENCES `programmes` (`id`);
+  ADD CONSTRAINT `modules_programme_id` FOREIGN KEY (`programme_id`) REFERENCES `programmes` (`id`);
 
 --
 -- Constraints for table `officer_programmes`
 --
 ALTER TABLE `officer_programmes`
-  ADD CONSTRAINT `officer_programmes_ibfk_1` FOREIGN KEY (`officer_id`) REFERENCES `users` (`id`),
-  ADD CONSTRAINT `officer_programmes_ibfk_2` FOREIGN KEY (`programme_id`) REFERENCES `programmes` (`id`);
+  ADD CONSTRAINT `officer_programmes_officer_id` FOREIGN KEY (`officer_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `officer_programmes_programme_id` FOREIGN KEY (`programme_id`) REFERENCES `programmes` (`id`);
 
 --
 -- Constraints for table `overrides`
 --
 ALTER TABLE `overrides`
-  ADD CONSTRAINT `overrides_ibfk_2` FOREIGN KEY (`classification_id`) REFERENCES `classifications` (`id`),
-  ADD CONSTRAINT `overrides_ibfk_3` FOREIGN KEY (`overriden_by`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `overrides_classification_id` FOREIGN KEY (`classification_id`) REFERENCES `classifications` (`id`),
+  ADD CONSTRAINT `overridden_by` FOREIGN KEY (`overriden_by`) REFERENCES `users` (`id`);
 
 --
 -- Constraints for table `results`
 --
 ALTER TABLE `results`
-  ADD CONSTRAINT `results_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `students` (`id`),
-  ADD CONSTRAINT `results_ibfk_2` FOREIGN KEY (`module_id`) REFERENCES `modules` (`id`);
+  ADD CONSTRAINT `results_student_id` FOREIGN KEY (`student_id`) REFERENCES `students` (`id`),
+  ADD CONSTRAINT `results_modules_id` FOREIGN KEY (`module_id`) REFERENCES `modules` (`id`);
 
 --
 -- Constraints for table `students`
 --
 ALTER TABLE `students`
-  ADD CONSTRAINT `students_ibfk_1` FOREIGN KEY (`programme_id`) REFERENCES `programmes` (`id`);
+  ADD CONSTRAINT `students_programme_id` FOREIGN KEY (`programme_id`) REFERENCES `programmes` (`id`);
 COMMIT;

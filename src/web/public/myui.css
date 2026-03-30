@@ -15,6 +15,11 @@ table th, table td {
   text-align: center;
 }
 
+hr.rounded {
+  width: 100%;
+  border-top: 4px solid #375e40;
+  border-radius: 5px;
+}
 
 .submit-btn {
   background-color: #375e40;
@@ -200,11 +205,17 @@ a.manage:hover, button.manage:hover {
 }
 
 .student-classification {
-  background-color: #2b4933;
-  margin: 2%;
-  padding: 1%;
-  border-radius: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
+
+.classification-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 
 
 

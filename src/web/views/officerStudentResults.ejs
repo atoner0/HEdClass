@@ -34,6 +34,7 @@
         </div>
       </nav>
        <div class="user-content">
+        <hr class="rounded">
         <div class="student-content">
             <div class="student-info">
                 <h4><%= student.student_no %> | <%= student.first_name %> <%= student.last_name %> </h4>
@@ -45,6 +46,7 @@
                 <a href="/officer/programme/<%= programme.id %>/student/<%= student.id %>/edit" class="manage">Edit Student Info</a>
             </div>
         </div>
+        <hr class="rounded">
 
         <div class="student-table">
         <% Object.keys(groupedModules).forEach(year => { %>
@@ -101,10 +103,27 @@
         <% }) %>
       </div>
       <div class="student-classification">
-        <h4>Proposed Classification:</h4>
-        <p><strong>Final Average: </strong> <%= finalAvg %></p>
-        <p><strong>Classification: </strong> <%= proposedClass %></p>
-        <p><strong>Reason: </strong> <%= reason %> </p>
+        <hr class="rounded">
+        <div class="classification-info">
+          <div class="student-info">
+            <h3>Classification:</h3>
+
+            <p><strong>Final Average: </strong> <%= finalAvg %></p>
+            <p><strong>Proposed Classification: </strong> <%= proposedClass %></p>
+            <p><strong>Final Classification: </strong> <%= finalClass %></p>
+
+            <% if (override) { %>
+            <p><strong>Override Reason: </strong> <%= finalReason %> </p>
+            <% } else { %>
+            <p><strong>Reason: </strong> <%= reason %> </p>
+            <% } %>
+          </div>
+          <div class ="edit-btn">
+              <a href="/officer/programme/<%= programme.id %>/student/<%= student.id %>/override" class="manage">Override Classification</a>
+          </div>
+        </div>
+
+        <hr class="rounded">
       </div>
       </div>
     </main>

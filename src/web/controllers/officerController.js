@@ -127,11 +127,29 @@ const getStudentResults = async (req, res) => {
 
     const creditsByYear = classificationData.creditsByYear;
     const finalAvg = classificationData.finalAvg;
-
     const proposedClass = classificationData.proposedClass;
-    const reason = classificationData.eligibilityReason;
+    const reason = classificationData.reason;
+  
+    const classificationRows = await officerModel.getStudentClassification(studentId);
+    const classification = classificationRows[0];
 
-    res.render("officerStudentResults", { user, student, programme, groupedModules, creditsByYear, avgByYear, finalAvg, proposedClass, reason });
+    let override = null;
+    let finalClass = proposedClass;
+    let finalReason = reason;
+
+    if (classification) {
+        const overrideData = await officerModel.getStudentOverride(classification.id);
+        override = overrideData[0] || null;
+
+        if (override){
+            finalClass = override.override_class;
+            finalReason = override.reason
+        }
+    }
+
+    res.render("officerStudentResults", { user, student, programme, groupedModules, creditsByYear, avgByYear, finalAvg, proposedClass, reason,
+                                            override, finalClass, finalReason
+     });
 };
 
 const getUpdateResult = async (req, res) => {
@@ -166,7 +184,6 @@ const postUpdateResult = async (req, res) => {
         cappedMark = mark;
     }
 
-
     await officerModel.updateResult(attemptNo, mark, isResit, cappedMark, passed, resultId)
 
     res.redirect(`/officer/programme/${programmeId}/student/${studentId}/results`);
@@ -183,7 +200,7 @@ const getAddResult = async (req, res) => {
     const result = await officerModel.getModulesResults(studentId);
     const modules = await officerModel.getModuleInfo(programmeId);
 
-        res.render("officerAddStudentResult", { user, programmeId, studentId, result, modules });
+    res.render("officerAddStudentResult", { user, programmeId, studentId, result, modules });
 };
 
 const postAddResult = async (req, res) => {
@@ -252,6 +269,37 @@ const postBatchClassification = async (req, res) => {
     res.redirect(`/officer/programme/${programmeId}/students`);
 };
 
+const getOverrideClass = async (req, res) => {
+    const user = req.session.user;
+    if (!user) {
+        return res.redirect("/");
+    }
+
+    const {programmeId, studentId} = req.params;
+
+    const proposedClassData =  await officerModel.getStudentClassification(studentId);
+    const proposedClass = proposedClassData[0];
+
+    const classifications = ["First", "2:1", "2:2", "3rd", "Fail"];
+
+    res.render("officerStudentOverride", { user, programmeId, studentId, proposedClass, classifications });
+};
+
+const postOverrideClass = async (req, res) => {
+    const user = req.session.user;
+    if (!user) {
+        return res.redirect("/");
+    }
+
+    const {programmeId, studentId} = req.params;
+
+    const fData = {...req.body};
+
+    await officerModel.addOverride(fData.id_field, fData.classification_field, fData.reason_field, user.id)
+
+    res.redirect(`/officer/programme/${programmeId}/student/${studentId}/results`);
+}
+
 export default { getOfficerDash, getProgrammeStudents, getUpdateStudent, postUpdateStudent, getAddStudent, postAddStudent,      
                     officerDeleteStudent, getStudentResults, getUpdateResult, postUpdateResult, getAddResult, postAddResult,
-                    officerDeleteStudentResult, postBatchClassification }
+                    officerDeleteStudentResult, postBatchClassification, getOverrideClass, postOverrideClass }
