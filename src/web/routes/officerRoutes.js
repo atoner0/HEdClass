@@ -18,6 +18,7 @@ router.post("/programme/:programmeId/student/:studentId/result/:resultId/delete"
 router.post("/programme/:programmeId/classify", officerController.postBatchClassification)
 router.get("/programme/:programmeId/student/:studentId/override", officerController.getOverrideClass)
 router.post("/programme/:programmeId/student/:studentId/override", officerController.postOverrideClass)
+router.post("/programme/:programmeId/student/:studentId/approve", officerController.postApproveClass)
 
 
 export default router;

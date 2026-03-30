@@ -21,6 +21,11 @@ hr.rounded {
   border-radius: 5px;
 }
 
+hr.dashed {
+  width: 100%;
+  border-top: 2px dashed #375e40;
+}
+
 .submit-btn {
   background-color: #375e40;
   border: none;
@@ -143,6 +148,7 @@ a.nav-btn:hover {
 }
 
 a.manage, button.manage {
+  white-space: nowrap;
   background-color: #1a504a;
   color: white;
   text-decoration: none;
@@ -200,20 +206,20 @@ a.manage:hover, button.manage:hover {
   text-align: center;
 }
 
-.resit {
+.resit, .flag {
   color: orange;
 }
 
-.student-classification {
+.classification {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  justify-content: space-around;
+  align-items: center;
 }
 
-.classification-info {
+.classification-btns {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
+  gap: 20px;
 }
 
 

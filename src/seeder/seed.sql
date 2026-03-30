@@ -115,8 +115,14 @@ CREATE TABLE `classifications` (
   `proposed_class` varchar(50) DEFAULT NULL,
   `is_eligible` tinyint(1) NOT NULL,
   `eligibility_reason` varchar(200) DEFAULT NULL,
+  `rationale` varchar(200) DEFAULT NULL,
+  `needs_review` tinyint(1) NOT NULL,
+  `review_reason` varchar(200) DEFAULT NULL,
   `classified_at` datetime DEFAULT NULL,
-  `classified_by` int(11) DEFAULT NULL
+  `classified_by` int(11) DEFAULT NULL,
+  `is_approved` tinyint(1) NOT NULL,
+  `approved_at` datetime DEFAULT NULL,
+  `approved_by` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------

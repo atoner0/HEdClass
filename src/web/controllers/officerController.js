@@ -128,7 +128,10 @@ const getStudentResults = async (req, res) => {
     const creditsByYear = classificationData.creditsByYear;
     const finalAvg = classificationData.finalAvg;
     const proposedClass = classificationData.proposedClass;
-    const reason = classificationData.reason;
+    const reason = classificationData.eligibilityReason;
+    const rationale = classificationData.rationale;
+    const needsReview = classificationData.needsReview;
+    const reviewReason = classificationData.reviewReason;
   
     const classificationRows = await officerModel.getStudentClassification(studentId);
     const classification = classificationRows[0];
@@ -136,6 +139,7 @@ const getStudentResults = async (req, res) => {
     let override = null;
     let finalClass = proposedClass;
     let finalReason = reason;
+    let approved = classification ? classification.is_approved : 0;
 
     if (classification) {
         const overrideData = await officerModel.getStudentOverride(classification.id);
@@ -144,11 +148,11 @@ const getStudentResults = async (req, res) => {
         if (override){
             finalClass = override.override_class;
             finalReason = override.reason
-        }
+        } 
     }
 
     res.render("officerStudentResults", { user, student, programme, groupedModules, creditsByYear, avgByYear, finalAvg, proposedClass, reason,
-                                            override, finalClass, finalReason
+                                           rationale, needsReview, reviewReason, override, approved, finalClass, finalReason
      });
 };
 
@@ -262,7 +266,8 @@ const postBatchClassification = async (req, res) => {
 
         await officerModel.addClassification(studentId, classificationData.yr1Creds, classificationData.yr2Creds, classificationData.yr3Creds,
                                                 classificationData.yr2Avg, classificationData.yr3Avg, classificationData.finalAvg, 
-                                                classificationData.proposedClass, classificationData.isEligible, classificationData.eligibilityReason, user.id
+                                                classificationData.proposedClass, classificationData.isEligible, classificationData.eligibilityReason,
+                                                classificationData.rationale, classificationData.needsReview, classificationData.reviewReason, user.id
         )
     }
 
@@ -298,8 +303,21 @@ const postOverrideClass = async (req, res) => {
     await officerModel.addOverride(fData.id_field, fData.classification_field, fData.reason_field, user.id)
 
     res.redirect(`/officer/programme/${programmeId}/student/${studentId}/results`);
+};
+
+const postApproveClass = async (req, res) => {
+    const user = req.session.user;
+    if (!user) {
+        return res.redirect("/");
+    }
+
+    const {programmeId, studentId} = req.params;
+
+    await officerModel.approveClass(user.id, studentId);
+
+    res.redirect(`/officer/programme/${programmeId}/student/${studentId}/results`);
 }
 
 export default { getOfficerDash, getProgrammeStudents, getUpdateStudent, postUpdateStudent, getAddStudent, postAddStudent,      
                     officerDeleteStudent, getStudentResults, getUpdateResult, postUpdateResult, getAddResult, postAddResult,
-                    officerDeleteStudentResult, postBatchClassification, getOverrideClass, postOverrideClass }
+                    officerDeleteStudentResult, postBatchClassification, getOverrideClass, postOverrideClass, postApproveClass }

@@ -104,25 +104,52 @@
       </div>
       <div class="student-classification">
         <hr class="rounded">
-        <div class="classification-info">
+        <div class="classification">
           <div class="student-info">
             <h3>Classification:</h3>
-
-            <p><strong>Final Average: </strong> <%= finalAvg %></p>
-            <p><strong>Proposed Classification: </strong> <%= proposedClass %></p>
+            <% if (!approved && !override) { %>
+              <p><strong>Proposed Classification: </strong> <%= proposedClass %></p>
+              <hr class="dashed">
+              <p><strong>Decision Rationale: </strong></p>
+              <div>
+                <%- rationale %>
+              </div>
+              <% if (needsReview) { %>
+                <p class = "flag"><strong>Manual Review Required</strong></p>
+                <p><strong>Review reason: </strong> <%= reviewReason %></p>
+              <% } %>
+            <hr class="dashed">
+          <% } else if (override) { %>
             <p><strong>Final Classification: </strong> <%= finalClass %></p>
-
-            <% if (override) { %>
             <p><strong>Override Reason: </strong> <%= finalReason %> </p>
-            <% } else { %>
+            <hr class="dashed">
+              <p><strong>Decision Rationale: </strong></p>
+              <div>
+                <%- rationale %>
+              </div>
+            <hr class="dashed">
+          <% } else if (approved) {%>
+            <p><strong>Final Classification: </strong> <%= finalClass %></p>
             <p><strong>Reason: </strong> <%= reason %> </p>
+            <hr class="dashed">
+              <p><strong>Decision Rationale: </strong></p>
+              <div>
+                <%- rationale %>
+              </div>
+            <hr class="dashed">
             <% } %>
           </div>
-          <div class ="edit-btn">
-              <a href="/officer/programme/<%= programme.id %>/student/<%= student.id %>/override" class="manage">Override Classification</a>
+          <div class="classification-btns">
+            <div class ="edit-btn">
+              <td><form action="/officer/programme/<%= programme.id %>/student/<%= student.id %>/approve" method="POST">
+                        <button class="manage">Approve Classification</button>
+              </form></td>
+            </div>
+            <div class ="edit-btn">
+                <a href="/officer/programme/<%= programme.id %>/student/<%= student.id %>/override" class="manage">Override Classification</a>
+            </div>
           </div>
         </div>
-
         <hr class="rounded">
       </div>
       </div>

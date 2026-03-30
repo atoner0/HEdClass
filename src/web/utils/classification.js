@@ -109,24 +109,78 @@ const calculateClassificationResults = (modules) => {
     }
 
     let proposedClass = "Pending review";
-
+    let needsReview = false;
+    let reviewReason = "";
 
     if (isEligible){
         if (finalAvg >= 70){
             proposedClass = "First"
+        } else if (finalAvg >=68 && finalAvg < 70) {
+            needsReview = true;
+            reviewReason = "Borderline First classification";
         } else if (finalAvg >=60){
             proposedClass = "2:1"
+        } else if (finalAvg >=58 && finalAvg < 60) {
+            needsReview = true;
+            reviewReason = "Borderline 2:1 classification";
         } else if (finalAvg >=50){
             proposedClass = "2:2"
+        } else if (finalAvg >=48 && finalAvg < 50) {
+            needsReview = true;
+            reviewReason = "Borderline 2:2 classification";
         } else if (finalAvg >=40){
             proposedClass = "3rd"
+        } else if (finalAvg >=38 && finalAvg < 40) {
+            needsReview = true;
+            reviewReason = "Borderline Third/Fail classification";
         } else {
             proposedClass = "Fail"
         }
+    } else {
+        needsReview = true;
+        reviewReason = eligibilityReason;
     }
 
-    return {creditsByYear, yr1Creds, yr2Creds, yr3Creds, yr2Avg, yr3Avg, finalAvg, proposedClass, isEligible, eligibilityReason};
+    const rationale = buildRationale({yr1Creds, yr2Creds, yr3Creds, yr2Avg, yr3Avg, finalAvg, isEligible, hasOutstandingFails});
 
-};
+    return {creditsByYear, yr1Creds, yr2Creds, yr3Creds, yr2Avg, yr3Avg, finalAvg, proposedClass, isEligible, 
+                eligibilityReason, rationale, needsReview, reviewReason};
+
+    }
+
+const buildRationale = ({yr1Creds, yr2Creds, yr3Creds, yr2Avg, yr3Avg, finalAvg, isEligible, hasOutstandingFails}) => {
+        if (!isEligible){
+            return `<ul>
+                        <li><strong>Student not eligible for classification.</strong></li>
+                        <li><strong>Credits achieved:</strong>
+                            <ul>
+                                <li>Year 1 - ${yr1Creds}</li>
+                                <li>Year 2 - ${yr2Creds}</li>
+                                <li>Year 3 - ${yr3Creds}</li>
+                            </ul>
+                        </li>
+                        <li><strong>Outstanding Fails:</strong> ${hasOutstandingFails ? "Yes" : "No"}</li>
+                    </ul>`
+        } else {
+            return `<ul>
+                        <li><strong>Credits achieved:</strong>
+                            <ul>
+                                <li>Year 1 - ${yr1Creds}</li>
+                                <li>Year 2 - ${yr2Creds}</li>
+                                <li>Year 3 - ${yr3Creds}</li>
+                            </ul>
+                        </li>
+                        <li><strong>Averages:</strong>
+                            <ul>
+                                <li>Year 2 - ${yr2Avg}</li>
+                                <li>Year 3 - ${yr3Avg}</li>
+                                <li>Final - ${Number(finalAvg).toFixed(2)} (using 30/70 weighting)</li>
+                            </ul>
+                        </li>
+                        <li><strong>Outstanding Fails:</strong> ${hasOutstandingFails ? "Yes" : "No"}</li>
+                    </ul>`
+        }
+}
+
 
 export default { calculateYearAvg, calculateYearCredits, calculateFinalAvg, groupByYear, getLatestModuleResults, calculateClassificationResults }
