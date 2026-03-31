@@ -332,14 +332,15 @@ const getStatistics = async (req, res) => {
 
     const classifications =  await officerModel.getProgrammeClassifications(programmeId);
 
-    const countData = classificationCalc.calculateStatusCounts(classifications);
 
+    const countData = classificationCalc.calculateStatusCounts(classifications);
     const classifiedCount = countData.classifiedCount;
     const reviewCount = countData.reviewCount;
     const approvedCount = countData.approvedCount;
 
+    const classificationBreakdown = countData.classificationBreakdown;
 
-    res.render("officerStatistics", {user, programmeId, programme, studentCount, classifiedCount, reviewCount, approvedCount})
+    res.render("officerStatistics", {user, programmeId, programme, studentCount, countData, classifiedCount, reviewCount, approvedCount, classificationBreakdown})
 };
 
 export default { getOfficerDash, getProgrammeStudents, getUpdateStudent, postUpdateStudent, getAddStudent, postAddStudent,      

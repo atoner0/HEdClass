@@ -185,18 +185,50 @@ const buildRationale = ({yr1Creds, yr2Creds, yr3Creds, yr2Avg, yr3Avg, finalAvg,
 const calculateStatusCounts = (classifications) => {
     let reviewCount = 0;
     let approvedCount = 0;
+    let overrideCount = 0;
+
+    let firstCount = 0;
+    let upperSecondCount = 0;
+    let lowerSecondCount = 0;
+    let thirdCount = 0;
+    let failCount = 0;
+    let ineligibleCount = 0;
 
     const classifiedCount = classifications.length;
 
-    classifications.forEach(classification => {
+    for (const classification of classifications){
         if (classification.needs_review) {
             reviewCount ++;
-        } else if (classification.is_approved){
+        } 
+        
+        if (classification.is_approved){
             approvedCount ++;
-        }
-    });
+        }  
 
-    return {classifiedCount, reviewCount, approvedCount}
+        if (classification.override_class) {
+            overrideCount ++;
+        }
+        
+        let finalClass = classification.override_class || classification.proposed_class;
+
+        if (finalClass === "First"){
+            firstCount ++;
+        } else if (finalClass === "2:1"){
+            upperSecondCount ++;
+        } else if (finalClass === "2:2"){
+            lowerSecondCount ++;
+        } else if (finalClass === "3rd"){
+            thirdCount ++;
+        } else if (finalClass === "Fail"){
+            failCount ++;
+        } else if (finalClass === "Pending review"){
+            ineligibleCount ++;
+        }
+    }
+
+    const classificationBreakdown = [firstCount, upperSecondCount, lowerSecondCount, thirdCount, failCount, ineligibleCount];
+
+    return {classifiedCount, reviewCount, approvedCount, overrideCount, classificationBreakdown}
 }
 
 export default { calculateYearAvg, calculateYearCredits, calculateFinalAvg, groupByYear, getLatestModuleResults, calculateClassificationResults,

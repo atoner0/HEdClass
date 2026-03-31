@@ -275,10 +275,15 @@ const approveClass = async(user, studentId) => {
 }
 
 const getProgrammeClassifications = async (programmeId) => {
-    const sql = `SELECT * FROM classifications
-                 JOIN students 
-                 ON 
+    const sql = `SELECT classifications.id,
+                        classifications.proposed_class,
+                        classifications.needs_review,
+                        classifications.is_approved,
+                        classifications.student_id 
+                 FROM classifications
+                 JOIN students ON 
                     classifications.student_id = students.id
+                 LEFT JOIN overrides ON overrides.classification_id = classifications.id
                  WHERE students.programme_id = ?`
 
     try {

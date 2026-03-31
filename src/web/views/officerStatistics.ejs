@@ -54,10 +54,25 @@
                 </article>
             </div>
         <hr class="rounded">
-        <div class="charts">
-            
+        <div class="charts-container">
+            <div class ="chart">
+                <canvas id="barChart"></canvas>
+            </div>
+            <div class ="chart">
+                <canvas id="doughnutChart"></canvas>
+            </div>
+
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+            <script> 
+                const classificationBreakdown = JSON.parse('<%- JSON.stringify(classificationBreakdown) %>'); 
+                const countData = JSON.parse('<%- JSON.stringify(countData) %>');
+            </script>
+
+            <script src="/js/officerStatisticsCharts.js"></script>
         </div>
-        </div>
+         <hr class="rounded">
+        </div>    
     </main>
   </body>
 </html>
