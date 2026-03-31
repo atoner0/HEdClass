@@ -180,7 +180,25 @@ const buildRationale = ({yr1Creds, yr2Creds, yr3Creds, yr2Avg, yr3Avg, finalAvg,
                         <li><strong>Outstanding Fails:</strong> ${hasOutstandingFails ? "Yes" : "No"}</li>
                     </ul>`
         }
+};
+
+const calculateStatusCounts = (classifications) => {
+    let reviewCount = 0;
+    let approvedCount = 0;
+
+    const classifiedCount = classifications.length;
+
+    classifications.forEach(classification => {
+        if (classification.needs_review) {
+            reviewCount ++;
+        } else if (classification.is_approved){
+            approvedCount ++;
+        }
+    });
+
+    return {classifiedCount, reviewCount, approvedCount}
 }
 
-
-export default { calculateYearAvg, calculateYearCredits, calculateFinalAvg, groupByYear, getLatestModuleResults, calculateClassificationResults }
+export default { calculateYearAvg, calculateYearCredits, calculateFinalAvg, groupByYear, getLatestModuleResults, calculateClassificationResults,
+                    calculateStatusCounts
+ }

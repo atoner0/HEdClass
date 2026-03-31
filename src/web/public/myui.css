@@ -222,6 +222,19 @@ a.manage:hover, button.manage:hover {
   gap: 20px;
 }
 
+.count-stats {
+  display: flex;
+  justify-content: space-around;
+  gap: 20px;
+}
+
+.count-stats article {
+  background-color: #375e40;
+  text-align: center;
+  margin: 1%;
+  padding: 1.5%;
+}
+
 
 
 

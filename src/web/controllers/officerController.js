@@ -316,8 +316,33 @@ const postApproveClass = async (req, res) => {
     await officerModel.approveClass(user.id, studentId);
 
     res.redirect(`/officer/programme/${programmeId}/student/${studentId}/results`);
-}
+};
+
+const getStatistics = async (req, res) => {
+    const user = req.session.user;
+    if (!user) {
+        return res.redirect("/");
+    }
+
+    const programmeId = req.params.programmeId;
+    const programmeData = await adminModel.getOneProgramme(programmeId)
+    const programme = programmeData[0];
+
+    const studentCount = await officerModel.getStudentCount(programmeId);
+
+    const classifications =  await officerModel.getProgrammeClassifications(programmeId);
+
+    const countData = classificationCalc.calculateStatusCounts(classifications);
+
+    const classifiedCount = countData.classifiedCount;
+    const reviewCount = countData.reviewCount;
+    const approvedCount = countData.approvedCount;
+
+
+    res.render("officerStatistics", {user, programmeId, programme, studentCount, classifiedCount, reviewCount, approvedCount})
+};
 
 export default { getOfficerDash, getProgrammeStudents, getUpdateStudent, postUpdateStudent, getAddStudent, postAddStudent,      
                     officerDeleteStudent, getStudentResults, getUpdateResult, postUpdateResult, getAddResult, postAddResult,
-                    officerDeleteStudentResult, postBatchClassification, getOverrideClass, postOverrideClass, postApproveClass }
+                    officerDeleteStudentResult, postBatchClassification, getOverrideClass, postOverrideClass, postApproveClass,
+                    getStatistics }

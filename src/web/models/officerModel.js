@@ -274,7 +274,38 @@ const approveClass = async(user, studentId) => {
     }
 }
 
+const getProgrammeClassifications = async (programmeId) => {
+    const sql = `SELECT * FROM classifications
+                 JOIN students 
+                 ON 
+                    classifications.student_id = students.id
+                 WHERE students.programme_id = ?`
+
+    try {
+           const [rows] = await db.promise().query(sql, [programmeId]);
+           return rows;
+    } catch (error) {
+        console.error("Model error:", error);
+        throw error;
+    }
+}
+
+const getStudentCount = async (programmeId) => {
+    const sql = `SELECT COUNT(*) AS count
+                 FROM students
+                 WHERE programme_id = ?`
+
+    try {
+           const [rows] = await db.promise().query(sql, [programmeId]);
+           return rows[0].count;
+    } catch (error) {
+        console.error("Model error:", error);
+        throw error;
+    }
+}
+
 export default { getOfficerProgrammes, getStudents, getOneStudent, updateStudent, addStudent, deleteStudent,
                    getModulesResults, getOneModuleResult, updateResult, getModuleInfo, addResult, deleteResult,
-                   addClassification, getStudentClassification, getStudentOverride, addOverride, approveClass
+                   addClassification, getStudentClassification, getStudentOverride, addOverride, approveClass,
+                   getProgrammeClassifications, getStudentCount
  };

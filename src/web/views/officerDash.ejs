@@ -22,7 +22,6 @@
           </ul>
           <ul class="user-btns">
             <li><a href="/officer" class="nav-btn">Home</a></li>
-            <li><a href="/officer/statistics" class="nav-btn">Statistics</a></li>
           </ul>
         </div>
         <div class="right">
@@ -55,6 +54,7 @@
               <td><%= programme.academic_year %></td>
               <td><%= programme.student_count %></td>
               <td><a href="/officer/programme/<%= programme.id %>/students" class="table-btn">Manage Cohort</a></td>
+              <td><a href="/officer/statistics/<%= programme.id %>" class="table-btn">View statistics</a></td>
             </tr>
              <% }) %>
           </tbody>

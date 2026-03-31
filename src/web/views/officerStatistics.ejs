@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Programme Statistics</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
+    />
+
+    <link rel="stylesheet" href="/myui.css" />
+  </head>
+  <body>
+    <main class="container-fluid">
+      <nav class="user-nav">
+        <div class="left">
+          <ul class="user-title">
+            <li><h3>Programme Statistics</h3></li>
+          </ul>
+          <ul class="user-btns">
+            <li><a href="/officer" class="nav-btn">Home</a></li>
+          </ul>
+        </div>
+        <div class="right">
+          <ul class="logout">
+            <li>Hello <%= user.username %></li>
+            <li><a href="/logout" class="nav-btn">Log Out</a></li>
+          </ul>
+        </div>
+    </nav>
+        <div class="user-content">
+            <div class="content-title">
+                <h4><%= programme.title %></h4>
+            </div>
+            <hr class="rounded">
+            <div class="count-stats">
+                <article>
+                    <h5> Total Students: </h5>
+                    <p> <%= studentCount %> </p>  
+                </article>
+                <article>
+                    <h5> Students Classified: </h5>
+                    <p> <%= classifiedCount %> </p>  
+                </article>
+                <article>
+                    <h5> Review Needed: </h5>
+                    <p> <%= reviewCount %> </p>  
+                </article>
+                <article>
+                    <h5> Classifications Approved: </h5>
+                    <p> <%= approvedCount %> </p>  
+                </article>
+            </div>
+        <hr class="rounded">
+        <div class="charts">
+            
+        </div>
+        </div>
+    </main>
+  </body>
+</html>
