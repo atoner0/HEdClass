@@ -52,7 +52,7 @@
               <% Object.keys(groupedModules).forEach(year => { %>
                   <div class="year"><h5> Year: <%= year %></h5></div>
               <div class="table-wrapper">
-              <table class = "studentResultsTable">
+              <table class = "studentResultsTable" data-year = "<%= year %>">
                 <thead>
                   <tr>
                     <th scope="col">Module Code</th>
@@ -100,39 +100,37 @@
         </div>     
         <% }) %>
         <div class = "export-btn">
-                  <button id = "btnExportToCSV" class="manage">Export to CSV</button>
-        <script src = "/js/tableCSVExporter.js"></script>
-        <script>
-          const tables = document.querySelectorAll(".studentResultsTable");
+            <button id = "btnExportToCSV" class="manage">Export Results to CSV</button>
+          <script src = "/js/tableCSVExporter.js"></script>
+          <script src = "/js/CSVDownload.js"></script>
+          <script>
+            const tables = document.querySelectorAll(".studentResultsTable");
 
-          const btnExportToCSV = document.getElementById("btnExportToCSV");
+            const btnExportToCSV = document.getElementById("btnExportToCSV");
 
-          btnExportToCSV.addEventListener("click", () => {
-            //holding all tables, including headers
-            const exporters = Array.from(tables).map(table => new TableCSVExporter(table));
-          
-            const csvOutput = exporters.map(exporter => exporter.convertToCSV()).join("\n\n");
+            const studentNo = "<%= student.student_no %>";
+            const studentName = "<%= student.first_name %>_<%= student.last_name %>";
+            const programme = "<%= programme.title %>";
 
-            //blob is container for random data
-            //here creating blob of CSV
-            const csvBlob = new Blob([csvOutput], {type: "text/csv"});
-            const blobUrl = URL.createObjectURL(csvBlob);
+            btnExportToCSV.addEventListener("click", () => {
+              //holding all tables, including headers
+              const exporters = Array.from(tables).map(table => new TableCSVExporter(table));
+            
+              const csvOutput = exporters.map(exporter => exporter.convertToCSV()).join("\n\n");
 
-            const anchorElement = document.createElement("a");
+              const lines = [
+                `Student Number, ${studentNo}`,
+                `Student Name, ${studentName}`,
+                `Programme,${programme}`,
+                ""
+              ];
+              
+              lines.push(...csvOutput.split("\r\n"));
 
-           anchorElement.href = blobUrl;
-           anchorElement.download = "student-results-table.csv";
-           anchorElement.click();
-
-           //tells browser to forget about reference to blob
-           //reducing memory usage!
-           setTimeout(() => {
-            URL.revokeObjectURL(blobUrl);
-           }, 500);
-          })
-          
-          
-        </script>
+              downloadCSV(lines, `${studentNo}-${studentName}-results.csv`)
+            
+            })
+          </script>
         </div>
 
       </div>

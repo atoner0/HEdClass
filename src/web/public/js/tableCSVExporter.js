@@ -10,6 +10,13 @@ class TableCSVExporter {
 
     convertToCSV () {
         const lines = [];
+
+        const year = this.table.dataset.year;
+
+        if (year){
+            lines.push(`Year ${year} Results`);
+        }
+
         const exportableRows = this.rows.filter(row => !row.classList.contains("result-stats"));
         const numCols = this._findLongestRowLength();
 
