@@ -40,6 +40,31 @@ hr.dashed {
   overflow-x: auto;
 }
 
+dialog {
+  border: none;
+  border-radius: 0.5rem;
+  padding: 20px;
+  text-align: center;
+}
+
+dialog .modal-btn {
+  margin-top: 15px;
+  padding: 8px 16px;
+  background-color: #1a504a;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+}
+
+dialog .modal-btn:hover {
+  background-color: #407872;
+  border: none;
+}
+
+dialog .modal-btn:focus {
+  box-shadow: none;
+}
+
 /*----LOGIN----*/
 
 .login-title {
@@ -151,17 +176,16 @@ a.nav-btn:hover {
     justify-content: center;
     align-items: center; 
     gap: 20px;
+    margin-top: 15px;
 }
+
+
 
 .manage-btn, .export-btn {
     display: flex;
     justify-content: center;
     align-items: center; 
     margin: 20px;
-}
-
-.cohort-btns form {
-    margin: 0;
 }
 
 a.manage, button.manage {
@@ -173,10 +197,13 @@ a.manage, button.manage {
   padding: 10px 15px;
   border-radius: 0.5rem;
   border: none;
+  margin-bottom: 0;
 }
 
-a.manage:hover, button.manage:hover {
+a.manage:hover, button.manage:hover, button.manage:focus {
   background-color: #407872;
+  border: none;
+  box-shadow: none;
 }
 
 .table-btn {

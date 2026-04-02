@@ -72,11 +72,50 @@
         <div class = "cohort-btns">
             <a href = "/officer/programme/<%= programmeId %>/student/add" class = "manage"> Add Student </a>
             
-            <form action="/officer/programme/<%= programmeId %>/classify" method="POST">
-              <button class="manage"> Classify Students </button>
-            </form>
-        </div>
+          <button type = "button" class = "manage" onclick="runBatchClassification(<%= programmeId %>)">
+            Run Batch Classification
+          </button>
+          <dialog id="resultModal">
+            <article>
+              <header>
+                <h4> Batch Classification </h4>
+              </header>
+                <p id="modalMessage"></p>
+                <form method="dialog">
+                    <button class="modal-btn">OK</button>
+                </form>
+              </article>
+            </dialog>
 
+
+          <script>
+            function showModal(message){
+              const dialog = document.getElementById("resultModal");
+              const text = document.getElementById("modalMessage");
+
+              text.textContent = message;
+              dialog.showModal();
+            }
+
+            async function runBatchClassification(programmeId){
+              try {
+                const response = await fetch(`/api/programmes/${programmeId}/classifications/run`, {method: "POST"});
+
+                const data = await response.json();
+
+                if(!response.ok){
+                  showModal(data.error || "Batch classification failed");
+                  return;
+                }
+
+                showModal(data.message);
+
+              } catch (error){
+                showModal("Something went wrong while running batch classification");
+              }
+            }
+          </script>
+        </div>
       </div>
     </main>
   </body>

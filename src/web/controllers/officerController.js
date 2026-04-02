@@ -247,33 +247,6 @@ const officerDeleteStudentResult = async (req, res) => {
 
 };
 
-const postBatchClassification = async (req, res) => {
-    const user = req.session.user;
-    if (!user) {
-        return res.redirect("/");
-    }
-
-    const programmeId = req.params.programmeId;
-
-    const students = await officerModel.getStudents(programmeId);
-
-    for (const student of students){
-        const studentId = student.id;
-
-        const modules = await officerModel.getModulesResults(studentId);
-
-        const classificationData = classificationCalc.calculateClassificationResults(modules);
-
-        await officerModel.addClassification(studentId, classificationData.yr1Creds, classificationData.yr2Creds, classificationData.yr3Creds,
-                                                classificationData.yr2Avg, classificationData.yr3Avg, classificationData.finalAvg, 
-                                                classificationData.proposedClass, classificationData.isEligible, classificationData.eligibilityReason,
-                                                classificationData.rationale, classificationData.needsReview, classificationData.reviewReason, user.id
-        )
-    }
-
-    res.redirect(`/officer/programme/${programmeId}/students`);
-};
-
 const getOverrideClass = async (req, res) => {
     const user = req.session.user;
     if (!user) {
@@ -345,5 +318,5 @@ const getStatistics = async (req, res) => {
 
 export default { getOfficerDash, getProgrammeStudents, getUpdateStudent, postUpdateStudent, getAddStudent, postAddStudent,      
                     officerDeleteStudent, getStudentResults, getUpdateResult, postUpdateResult, getAddResult, postAddResult,
-                    officerDeleteStudentResult, postBatchClassification, getOverrideClass, postOverrideClass, postApproveClass,
+                    officerDeleteStudentResult, getOverrideClass, postOverrideClass, postApproveClass,
                     getStatistics }
