@@ -136,7 +136,7 @@ a.nav-btn:hover {
     gap: 20px;
 }
 
-.manage-btn {
+.manage-btn, .export-btn {
     display: flex;
     justify-content: center;
     align-items: center; 
@@ -248,7 +248,13 @@ a.manage:hover, button.manage:hover {
   height: 600px;
 }
 
-
+/* MOBILE */
+@media (max-width: 768px){
+  .user-nav{
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
 
 
 

@@ -50,7 +50,7 @@
         <div class="student-table">
         <% Object.keys(groupedModules).forEach(year => { %>
             <div class="year"><h5> Year: <%= year %></h5></div>
-        <table>
+        <table class = "studentResultsTable">
           <thead>
             <tr>
               <th scope="col">Module Code</th>
@@ -60,8 +60,8 @@
               <th scope="col">Mark</th>
               <th scope="col">Capped Mark</th>
               <th scope="col">Grade</th>
-              <th scope="col"></th>
-              <th scope="col"></th>
+              <th scope="col" class="no-export"></th>
+              <th scope="col" class="no-export"></th>
             </tr>
           </thead>
           <tbody>
@@ -70,18 +70,12 @@
               <th scope="row"><%= mod.module_code %></th>
               <td><%= mod.module_title %></td>
               <td class ="center"><%= mod.credits %></td>
-              <td class ="<%= mod.attempt_no > 1 ? 'resit' : 'center' %>">
-                <%= mod.attempt_no > 1 ? `Resit (Attempt ` + mod.attempt_no + `)` :`1` %>
-              </td>
+              <td class ="<%= mod.attempt_no > 1 ? 'resit' : 'center' %>"> <%= mod.attempt_no > 1 ? `Resit (Attempt ` + mod.attempt_no + `)` :`1` %></td>
               <td class = "center"><%= mod.mark %> </td>
               <td class = "center"><%= mod.capped_mark %></td>
-              <td> <% if (mod.passed) { %>
-                Pass
-               <% } else { %>
-                Fail
-              <% } %></td>
-              <td><a href="/officer/programme/<%= programme.id %>/student/<%= student.id %>/result/<%= mod.resultId %>/edit" class="table-btn">Edit</a></td>
-              <td><form action="/officer/programme/<%= programme.id %>/student/<%= student.id %>/result/<%= mod.resultId %>/delete" method="POST">
+              <td> <%= mod.passed ? 'Pass' : 'Fail' %></td>
+              <td class="no-export"><a href="/officer/programme/<%= programme.id %>/student/<%= student.id %>/result/<%= mod.resultId %>/edit" class="table-btn">Edit</a></td>
+              <td class="no-export"><form action="/officer/programme/<%= programme.id %>/student/<%= student.id %>/result/<%= mod.resultId %>/delete" method="POST">
                         <button class="table-btn">Delete</button>
               </form></td>
             </tr>
@@ -100,6 +94,42 @@
           <a href = "/officer/programme/<%= programme.id %>/student/<%= student.id %>/result/add" class = "manage"> Add Result </a>
         </div>     
         <% }) %>
+        <div class = "export-btn">
+                  <button id = "btnExportToCSV" class="manage">Export to CSV</button>
+        <script src = "/js/tableCSVExporter.js"></script>
+        <script>
+          const tables = document.querySelectorAll(".studentResultsTable");
+
+          const btnExportToCSV = document.getElementById("btnExportToCSV");
+
+          btnExportToCSV.addEventListener("click", () => {
+            //holding all tables, including headers
+            const exporters = Array.from(tables).map(table => new TableCSVExporter(table));
+          
+            const csvOutput = exporters.map(exporter => exporter.convertToCSV()).join("\n\n");
+
+            //blob is container for random data
+            //here creating blob of CSV
+            const csvBlob = new Blob([csvOutput], {type: "text/csv"});
+            const blobUrl = URL.createObjectURL(csvBlob);
+
+            const anchorElement = document.createElement("a");
+
+           anchorElement.href = blobUrl;
+           anchorElement.download = "student-results-table.csv";
+           anchorElement.click();
+
+           //tells browser to forget about reference to blob
+           //reducing memory usage!
+           setTimeout(() => {
+            URL.revokeObjectURL(blobUrl);
+           }, 500);
+          })
+          
+          
+        </script>
+        </div>
+
       </div>
       <div class="student-classification">
         <hr class="rounded">

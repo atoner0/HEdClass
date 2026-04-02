@@ -22,7 +22,7 @@ app.use(session({
   secret : "hedclass",
   resave : false,
   saveUninitialized : true,
-  cookie : { maxAge : 1000*1000*60*60 }
+  cookie : { maxAge : 1000*1000*60 }
 }));
 
 // ROUTES // 
@@ -32,5 +32,5 @@ app.use("/officer", officerRoutes);
 
 
 app.listen(PORT, (err) => {
-  console.log(`listening on port http://localhost:${PORT}`);
+  console.log(`Web app started on port http://localhost:${PORT}`);
 });
