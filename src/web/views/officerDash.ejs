@@ -33,32 +33,35 @@
       </nav>
        <div class="user-content">
         <div class="content-title"><h4>Assigned Programmes:</h4></div>
-        <table>
-          <thead>
-            <tr>
-              <th scope="col">ID</th>
-              <th scope="col">Title</th>
-              <th scope="col">Code</th>
-              <th scope="col">Academic Year</th>
-              <th scope="col">Number of Students</th>
-              <th scope="col"></th>
-              <th scope="col"></th>
-            </tr>
-          </thead>
-          <tbody>
-            <% programmes.forEach(programme => { %>
-            <tr>
-              <th scope="row"><%= programme.id %></th>
-              <td><%= programme.title %></td>
-              <td><%= programme.code %></td>
-              <td><%= programme.academic_year %></td>
-              <td><%= programme.student_count %></td>
-              <td><a href="/officer/programme/<%= programme.id %>/students" class="table-btn">Manage Cohort</a></td>
-              <td><a href="/officer/statistics/<%= programme.id %>" class="table-btn">View statistics</a></td>
-            </tr>
-             <% }) %>
-          </tbody>
-        </table>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Title</th>
+                <th scope="col">Code</th>
+                <th scope="col">Academic Year</th>
+                <th scope="col">Number of Students</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% programmes.forEach(programme => { %>
+              <tr>
+                <th scope="row"><%= programme.id %></th>
+                <td><%= programme.title %></td>
+                <td><%= programme.code %></td>
+                <td><%= programme.academic_year %></td>
+                <td><%= programme.student_count %></td>
+                <td><a href="/officer/programme/<%= programme.id %>/students" class="table-btn">Manage Cohort</a></td>
+                <td><a href="/officer/statistics/<%= programme.id %>" class="table-btn">View statistics</a></td>
+              </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+        
       </div>
     </main>
   </body>

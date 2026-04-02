@@ -32,40 +32,43 @@
         </div>
       </nav>
        <div class="user-content">
-        <table>
-          <thead>
-            <tr>
-              <th scope="col">ID</th>
-              <th scope="col">Student No.</th>
-              <th scope="col">First Name</th>
-              <th scope="col">Surname</th>
-              <th scope="col">Email</th>
-              <th scope="col">Study Year</th>
-              <th scope="col">Graduation Year</th>
-              <th scope="col"></th>
-              <th scope="col"></th>
-              <th scope="col"></th>
-            </tr>
-          </thead>
-          <tbody>
-            <% students.forEach(student => { %>
-            <tr>
-              <th scope="row"><%= student.id %></th>
-              <td><%= student.student_no %></td>
-              <td><%= student.first_name %></td>
-              <td><%= student.last_name %></td>
-              <td><%= student.email %></td>
-              <td><%= student.study_year %></td>
-              <td><%= student.graduation_year %></td>
-              <td><a href="/officer/programme/<%= programmeId %>/student/<%= student.id %>/results" class="table-btn">Results</a></td>
-              <td><a href="/officer/programme/<%= programmeId %>/student/<%= student.id %>/edit" class="table-btn">Edit</a></td>
-              <td><form action="/officer/programme/<%= programmeId %>/student/delete/<%= student.id %>" method="POST">
-                        <button class="table-btn">Delete</button>
-              </form></td>
-            </tr>
-             <% }) %>
-          </tbody>
-        </table>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Student No.</th>
+                <th scope="col">First Name</th>
+                <th scope="col">Surname</th>
+                <th scope="col">Email</th>
+                <th scope="col">Study Year</th>
+                <th scope="col">Graduation Year</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% students.forEach(student => { %>
+              <tr>
+                <th scope="row"><%= student.id %></th>
+                <td><%= student.student_no %></td>
+                <td><%= student.first_name %></td>
+                <td><%= student.last_name %></td>
+                <td><%= student.email %></td>
+                <td><%= student.study_year %></td>
+                <td><%= student.graduation_year %></td>
+                <td><a href="/officer/programme/<%= programmeId %>/student/<%= student.id %>/results" class="table-btn">Results</a></td>
+                <td><a href="/officer/programme/<%= programmeId %>/student/<%= student.id %>/edit" class="table-btn">Edit</a></td>
+                <td><form action="/officer/programme/<%= programmeId %>/student/delete/<%= student.id %>" method="POST">
+                          <button class="table-btn">Delete</button>
+                </form></td>
+              </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+        
         <div class = "cohort-btns">
             <a href = "/officer/programme/<%= programmeId %>/student/add" class = "manage"> Add Student </a>
             

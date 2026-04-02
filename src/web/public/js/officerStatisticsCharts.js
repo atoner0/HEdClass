@@ -24,8 +24,7 @@ const bar = document.getElementById('barChart');
       plugins: {
         title: {
           display: true,
-          text: 'Classification Distribution',
-          font
+          text: 'Classification Distribution'
         }
       },
       scales: {

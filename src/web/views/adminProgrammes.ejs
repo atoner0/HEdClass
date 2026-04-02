@@ -34,34 +34,36 @@
         </div>
       </nav>
       <div class="admin-content">
-        <table>
-          <thead>
-            <tr>
-              <th scope="col">ID</th>
-              <th scope="col">Title</th>
-              <th scope="col">Code</th>
-              <th scope="col">Award Type</th>
-              <th scope="col">Academic Year</th>
-              <th scope="col"></th>
-              <th scope="col"></th>
-            </tr>
-          </thead>
-          <tbody>
-            <% programmes.forEach(programme => { %>
-            <tr>
-              <th scope="row"><%= programme.id %></th>
-              <td><%= programme.title %></td>
-              <td><%= programme.code %></td>
-              <td><%= programme.award_type %></td>
-              <td><%= programme.academic_year %></td>
-              <td><a href="/admin/programmes/<%= programme.id %>" class="table-btn">Edit</a></td>
-              <td><form action="/admin/programme/delete/<%= programme.id %>" method="POST">
-                        <button class="table-btn">Delete</button>
-              </form></td>
-            </tr>
-             <% }) %>
-          </tbody>
-        </table>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Title</th>
+                <th scope="col">Code</th>
+                <th scope="col">Award Type</th>
+                <th scope="col">Academic Year</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% programmes.forEach(programme => { %>
+              <tr>
+                <th scope="row"><%= programme.id %></th>
+                <td><%= programme.title %></td>
+                <td><%= programme.code %></td>
+                <td><%= programme.award_type %></td>
+                <td><%= programme.academic_year %></td>
+                <td><a href="/admin/programmes/<%= programme.id %>" class="table-btn">Edit</a></td>
+                <td><form action="/admin/programme/delete/<%= programme.id %>" method="POST">
+                          <button class="table-btn">Delete</button>
+                </form></td>
+              </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
         <div class = "manage-btn">
           <a href = "/admin/programme/add" class = "manage"> Add Programme </a>
         </div>

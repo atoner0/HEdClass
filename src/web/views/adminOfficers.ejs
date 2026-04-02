@@ -34,36 +34,38 @@
         </div>
       </nav>
       <div class="admin-content">
-        <table>
-          <thead>
-            <tr>
-              <th scope="col">ID</th>
-              <th scope="col">Username</th>
-              <th scope="col">Email</th>
-              <th scope="col">Programmes</th>
-              <th scope="col"></th>
-              <th scope="col"></th>
-            </tr>
-          </thead>
-          <tbody>
-            <% officers.forEach(officer => { %>
-            <tr>
-              <th scope="row"><%= officer.id %></th>
-              <td><%= officer.username %></td>
-              <td><%= officer.email %></td>
-              <td>
-                <% officer.programmes.split(',').forEach((programme) => { %>
-                 <div><%= programme %></div>
-                <% }) %>
-              </td>
-              <td><a href="/admin/officers/<%= officer.id %>" class="table-btn">Edit</a></td>
-              <td><form action="/admin/officer/delete/<%= officer.id %>" method="POST">
-                        <button class="table-btn">Delete</button>
-              </form></td>
-            </tr>
-             <% }) %>
-          </tbody>
-        </table>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Username</th>
+                <th scope="col">Email</th>
+                <th scope="col">Programmes</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% officers.forEach(officer => { %>
+              <tr>
+                <th scope="row"><%= officer.id %></th>
+                <td><%= officer.username %></td>
+                <td><%= officer.email %></td>
+                <td>
+                  <% officer.programmes.split(',').forEach((programme) => { %>
+                  <div><%= programme %></div>
+                  <% }) %>
+                </td>
+                <td><a href="/admin/officers/<%= officer.id %>" class="table-btn">Edit</a></td>
+                <td><form action="/admin/officer/delete/<%= officer.id %>" method="POST">
+                          <button class="table-btn">Delete</button>
+                </form></td>
+              </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
         <div class = "manage-btn">
           <a href = "/admin/officer/add" class = "manage"> Add Officer </a>
         </div>
