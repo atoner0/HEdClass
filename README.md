@@ -1,5 +1,5 @@
 <!-- TABLE OF CONTENTS --> 
-### TABLE OF CONTENTS
+# TABLE OF CONTENTS
 * [Project Info](#about-the-project)
 * [Technologies](#technologies)
 * [Setup](#setting-up)
@@ -28,13 +28,13 @@
 
 ## Login Details
 
-# Admin
+### Admin
 Responsible for managing officers and programmes
 
 **Email** admin.@hedclass.com
 **Password** password123
 
-# Officers
+### Officers
 Responsible for managing students and their classifications
 
 **Email** officer1.@hedclass.com
