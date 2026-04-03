@@ -1,4 +1,5 @@
 <!-- TABLE OF CONTENTS --> 
+### TABLE OF CONTENTS
 * [Project Info](#about-the-project)
 * [Technologies](#technologies)
 * [Setup](#setting-up)
