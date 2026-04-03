@@ -87,7 +87,6 @@
               </article>
             </dialog>
 
-
           <script>
             function showModal(message){
               const dialog = document.getElementById("resultModal");
@@ -115,7 +114,44 @@
               }
             }
           </script>
-        </div>
+            <button id = "btnExportToCSV" class="manage">Export Classifications to CSV</button>
+          <script src = "/js/CSVDownload.js"></script>
+          <script>
+
+            const btnExportToCSV = document.getElementById("btnExportToCSV");
+
+            const programme = "<%= programme.title %>";
+            const classifications = <%- JSON.stringify(classifications) %>;
+
+            btnExportToCSV.addEventListener("click", () => {
+
+              const lines = [
+                `Programme,${programme}`,
+                "",
+                ["Student No", "Name", "Final Classification", "Final Average"].join(",")
+              ];
+              
+              classifications.forEach(student => {
+                const studentName = `${student.first_name} ${student.last_name}`;
+                let finalClass = student.override_class || student.proposed_class;
+
+                const row = [
+                    student.student_no,
+                    studentName,
+                    finalClass,
+                    Number(student.final_avg).toFixed(2)
+                ].map(value => {
+                  value = String(value ?? "").replace(/"/g, '""');
+                  return `"${value}"`
+                });
+
+                lines.push(row.join(","));
+              })
+
+              downloadCSV(lines, `${programme}-classifications.csv`)
+            
+            })
+          </script>
       </div>
     </main>
   </body>

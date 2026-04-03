@@ -25,10 +25,14 @@ const getProgrammeStudents = async (req,res) => {
     }
 
     const programmeId = req.params.programmeId;
+    const programmeData = await adminModel.getOneProgramme(programmeId);
+    const programme = programmeData[0];
 
     const students = await officerModel.getStudents(programmeId)
+    
+    const classifications = await officerModel.getProgrammeClassifications(programmeId);
 
-    res.render("officerStudents", {user, students, programmeId})
+    res.render("officerStudents", {user, students, programme, programmeId, classifications})
 };
 
 const getUpdateStudent = async (req, res) => {
@@ -304,7 +308,6 @@ const getStatistics = async (req, res) => {
     const studentCount = await officerModel.getStudentCount(programmeId);
 
     const classifications =  await officerModel.getProgrammeClassifications(programmeId);
-
 
     const countData = classificationCalc.calculateStatusCounts(classifications);
     const classifiedCount = countData.classifiedCount;

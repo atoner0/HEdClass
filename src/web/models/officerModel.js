@@ -224,9 +224,7 @@ const getStudentClassification = async(studentId) => {
 
 const getStudentOverride = async (classificationId) => {
     const sql = `SELECT * FROM overrides
-                 WHERE classification_id = ?
-                 ORDER BY overriden_at DESC 
-                 LIMIT 1`
+                 WHERE classification_id = ?`
 
         try {
            const [rows] = await db.promise().query(sql, [classificationId]);
@@ -276,10 +274,15 @@ const approveClass = async(user, studentId) => {
 
 const getProgrammeClassifications = async (programmeId) => {
     const sql = `SELECT classifications.id,
+                        classifications.final_avg,
                         classifications.proposed_class,
                         classifications.needs_review,
                         classifications.is_approved,
-                        classifications.student_id 
+                        classifications.student_id,
+                        students.student_no, 
+                        students.first_name,
+                        students.last_name,
+                        overrides.override_class AS override_class
                  FROM classifications
                  JOIN students ON 
                     classifications.student_id = students.id
