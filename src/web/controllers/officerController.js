@@ -139,7 +139,7 @@ const getStudentResults = async (req, res) => {
     }
 
     res.render("officerStudentResults", { user, student, programme, groupedModules, creditsByYear, avgByYear, finalAvg, proposedClass, reason,
-                                           rationale, needsReview, reviewReason, override, approved, finalClass, finalReason
+                                           rationale, needsReview, reviewReason, classification, override, approved, finalClass, finalReason
      });
 };
 

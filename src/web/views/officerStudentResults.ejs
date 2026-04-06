@@ -138,6 +138,7 @@
         <hr class="rounded">
         <div class="classification">
           <div class="student-info">
+            <% if (classification) { %>
             <h3>Classification:</h3>
             <% if (!approved && !override) { %>
               <p><strong>Proposed Classification: </strong> <%= proposedClass %></p>
@@ -181,6 +182,7 @@
                 <a href="/officer/programme/<%= programme.id %>/student/<%= student.id %>/override" class="manage">Override Classification</a>
             </div>
           </div>
+          <% } %>
         </div>
         <hr class="rounded">
       </div>
