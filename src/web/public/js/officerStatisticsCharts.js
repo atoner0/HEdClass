@@ -25,7 +25,10 @@ Chart.defaults.color = '#ffffff';
       plugins: {
         title: {
           display: true,
-          text: 'Classification Distribution'
+          text: 'Classification Distribution',
+          font: {
+            size: 20
+          }
         }
       },
       scales: {
@@ -63,7 +66,10 @@ const doughnut = document.getElementById('doughnutChart');
       plugins: {
         title: {
           display: true,
-          text: 'Approval Status'
+          text: 'Approval Status',
+            font: {
+            size: 20
+          }
         }
       }
     }
