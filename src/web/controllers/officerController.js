@@ -4,13 +4,8 @@ import classificationCalc from "../utils/classification.js"
 
 
 const getOfficerDash = async (req, res) => {
-
     const user = req.session.user;
     const officerId = req.session.user.id;
-
-    if (!user) {
-        return res.redirect("/");
-    }
 
     const programmes = await officerModel.getOfficerProgrammes(officerId);
 
@@ -19,10 +14,6 @@ const getOfficerDash = async (req, res) => {
 
 const getProgrammeStudents = async (req,res) => {
     const user = req.session.user;
-
-    if (!user) {
-        return res.redirect("/");
-    }
 
     const programmeId = req.params.programmeId;
     const programmeData = await adminModel.getOneProgramme(programmeId);
@@ -37,9 +28,6 @@ const getProgrammeStudents = async (req,res) => {
 
 const getUpdateStudent = async (req, res) => {
     const user = req.session.user;
-    if (!user) {
-        return res.redirect("/");
-    }
 
     const {programmeId, studentId} = req.params;
 
@@ -64,9 +52,7 @@ const postUpdateStudent = async (req, res) => {
 
 const getAddStudent = async (req, res) => {
     const user = req.session.user;
-    if (!user) {
-        return res.redirect("/");
-    }
+
     const programmeId = Number(req.params.programmeId);
 
     const students = await officerModel.getStudents(programmeId);
@@ -101,9 +87,6 @@ const officerDeleteStudent = async (req, res) => {
 
 const getStudentResults = async (req, res) => {
     const user = req.session.user;
-    if (!user) {
-        return res.redirect("/");
-    }
 
     const {programmeId, studentId} = req.params;
 
@@ -162,9 +145,6 @@ const getStudentResults = async (req, res) => {
 
 const getUpdateResult = async (req, res) => {
     const user = req.session.user;
-    if (!user) {
-        return res.redirect("/");
-    }
 
     const {programmeId, studentId, resultId} = req.params;
 
@@ -199,9 +179,6 @@ const postUpdateResult = async (req, res) => {
 
 const getAddResult = async (req, res) => {
     const user = req.session.user;
-    if (!user) {
-        return res.redirect("/");
-    }
 
     const {programmeId, studentId} = req.params;
 
@@ -253,9 +230,6 @@ const officerDeleteStudentResult = async (req, res) => {
 
 const getOverrideClass = async (req, res) => {
     const user = req.session.user;
-    if (!user) {
-        return res.redirect("/");
-    }
 
     const {programmeId, studentId} = req.params;
 
@@ -269,9 +243,6 @@ const getOverrideClass = async (req, res) => {
 
 const postOverrideClass = async (req, res) => {
     const user = req.session.user;
-    if (!user) {
-        return res.redirect("/");
-    }
 
     const {programmeId, studentId} = req.params;
 
@@ -284,9 +255,6 @@ const postOverrideClass = async (req, res) => {
 
 const postApproveClass = async (req, res) => {
     const user = req.session.user;
-    if (!user) {
-        return res.redirect("/");
-    }
 
     const {programmeId, studentId} = req.params;
 
@@ -297,9 +265,6 @@ const postApproveClass = async (req, res) => {
 
 const getStatistics = async (req, res) => {
     const user = req.session.user;
-    if (!user) {
-        return res.redirect("/");
-    }
 
     const programmeId = req.params.programmeId;
     const programmeData = await adminModel.getOneProgramme(programmeId)

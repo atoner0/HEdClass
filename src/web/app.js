@@ -1,5 +1,4 @@
 import express from "express";
-import axios from "axios";
 import session from "express-session";
 import loginRoutes from "./routes/loginRoutes.js"
 import adminRoutes from "./routes/adminRoutes.js"

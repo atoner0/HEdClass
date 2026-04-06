@@ -2,12 +2,7 @@ import adminModel from "../models/adminModel.js";
 import bcrypt from "bcrypt";
 
 const getAdminDash = async (req, res) => {
-
     const user = req.session.user;
-
-    if (!user) {
-        return res.redirect("/");
-    }
 
     const officers = await adminModel.getOfficers();
     const programmes = await adminModel.getProgrammes();
@@ -16,15 +11,9 @@ const getAdminDash = async (req, res) => {
 };
 
 const getOfficers = async (req, res) => {
-
     const user = req.session.user;
 
-    if (!user) {
-        return res.redirect("/");
-    }
-
     const officers = await adminModel.getOfficers();
-
 
     res.render("adminOfficers", { user, officers });
 };
@@ -105,12 +94,7 @@ const adminDeleteOfficer = async (req, res) => {
 };
 
 const getProgrammes = async (req, res) => {
-
     const user = req.session.user;
-
-    if (!user) {
-        return res.redirect("/");
-    }
 
     const programmes = await adminModel.getProgrammes();
 

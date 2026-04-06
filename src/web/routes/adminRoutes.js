@@ -1,6 +1,10 @@
 import express from "express";
-const router = express.Router();
 import adminController from "../controllers/adminController.js";
+import {requireAuth, requireAdmin} from "../middleware/auth.js";
+const router = express.Router();
+
+//protecting admin routes
+router.use(requireAuth, requireAdmin);
 
 router.get("/", adminController.getAdminDash);
 router.get("/officers", adminController.getOfficers);

@@ -1,6 +1,11 @@
 import express from "express";
-const router = express.Router();
 import officerController from "../controllers/officerController.js";
+import {requireAuth, requireOfficer} from "../middleware/auth.js"
+
+const router = express.Router();
+
+//protecting officer routes
+router.use(requireAuth, requireOfficer);
 
 router.get("/", officerController.getOfficerDash);
 router.get("/programme/:programmeId/students", officerController.getProgrammeStudents);
