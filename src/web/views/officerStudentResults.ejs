@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -44,6 +44,39 @@
             <div class ="edit-btn">
                 <a href="/officer/programme/<%= programme.id %>/student/<%= student.id %>/edit" class="manage">Edit Student Info</a>
             </div>
+            <div class = "export-btn">
+            <button id = "btnExportToCSV" class="manage">Export Results to CSV</button>
+          <script src = "/js/tableCSVExporter.js"></script>
+          <script src = "/js/CSVDownload.js"></script>
+          <script>
+            const tables = document.querySelectorAll(".studentResultsTable");
+
+            const btnExportToCSV = document.getElementById("btnExportToCSV");
+
+            const studentNo = "<%= student.student_no %>";
+            const studentName = "<%= student.first_name %>_<%= student.last_name %>";
+            const programme = "<%= programme.title %>";
+
+            btnExportToCSV.addEventListener("click", () => {
+              //holding all tables, including headers
+              const exporters = Array.from(tables).map(table => new TableCSVExporter(table));
+            
+              const csvOutput = exporters.map(exporter => exporter.convertToCSV()).join("\n\n");
+
+              const lines = [
+                `Student Number, ${studentNo}`,
+                `Student Name, ${studentName}`,
+                `Programme,${programme}`,
+                ""
+              ];
+              
+              lines.push(...csvOutput.split("\r\n"));
+
+              downloadCSV(lines, `${studentNo}-${studentName}-results.csv`)
+            
+            })
+          </script>
+        </div>
         </div>
         <hr class="rounded">
 
@@ -99,39 +132,7 @@
           <a href = "/officer/programme/<%= programme.id %>/student/<%= student.id %>/result/add" class = "manage"> Add Result </a>
         </div>     
         <% }) %>
-        <div class = "export-btn">
-            <button id = "btnExportToCSV" class="manage">Export Results to CSV</button>
-          <script src = "/js/tableCSVExporter.js"></script>
-          <script src = "/js/CSVDownload.js"></script>
-          <script>
-            const tables = document.querySelectorAll(".studentResultsTable");
-
-            const btnExportToCSV = document.getElementById("btnExportToCSV");
-
-            const studentNo = "<%= student.student_no %>";
-            const studentName = "<%= student.first_name %>_<%= student.last_name %>";
-            const programme = "<%= programme.title %>";
-
-            btnExportToCSV.addEventListener("click", () => {
-              //holding all tables, including headers
-              const exporters = Array.from(tables).map(table => new TableCSVExporter(table));
-            
-              const csvOutput = exporters.map(exporter => exporter.convertToCSV()).join("\n\n");
-
-              const lines = [
-                `Student Number, ${studentNo}`,
-                `Student Name, ${studentName}`,
-                `Programme,${programme}`,
-                ""
-              ];
-              
-              lines.push(...csvOutput.split("\r\n"));
-
-              downloadCSV(lines, `${studentNo}-${studentName}-results.csv`)
-            
-            })
-          </script>
-        </div>
+        
 
       </div>
       <div class="student-classification">

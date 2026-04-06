@@ -1,4 +1,5 @@
 const bar = document.getElementById('barChart');
+Chart.defaults.color = '#ffffff';
 
   new Chart(bar, {
     type: 'bar',
