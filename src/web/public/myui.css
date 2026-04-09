@@ -230,6 +230,16 @@ a.manage:hover, button.manage:hover, button.manage:focus {
 
 .student-content{
   display: flex;
+  align-items: flex-center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.student-actions {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
 }
 
 .student-info {
@@ -328,6 +338,14 @@ a.manage:hover, button.manage:hover, button.manage:focus {
   .student-content, .classification, .count-stats, .charts-container {
     flex-direction: column;
     align-items: stretch;
+  }
+
+  .student-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
   }
 
   .form {
